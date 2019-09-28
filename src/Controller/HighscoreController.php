@@ -4,10 +4,11 @@
 namespace App\Controller;
 
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HighscoreController
+class HighscoreController extends AbstractController
 {
     /**
      * @return Response
@@ -15,6 +16,6 @@ class HighscoreController
      * @Route("/", name="sokoboo_index")
      */
     public function index(): Response {
-        return new Response('<html><head></head><body>Hello world</body></html>');
+        return $this->render("index.html.twig");
     }
 }
