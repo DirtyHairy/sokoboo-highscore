@@ -48,7 +48,7 @@ echo "BUILD_ID=$build_id" >> .env
 "$COMPOSER" dump-env prod
 
 cd ..
-tar -cjf "build-$build_id.tar.bz2" --exclude .git "$build_id"
+"$TAR" -cjf "build-$build_id.tar.bz2" --exclude .git "$build_id"
 
 echo
 echo build $build_id is ready
