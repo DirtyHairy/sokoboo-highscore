@@ -34,7 +34,7 @@ test -x "$TAR" || "tar not available"
 current_dir=`"$READLINK" $0`
 current_dir=`dirname $0`
 
-build_id=`"$DATE" "+%Y%m%d-%H%M"`
+build_id=`"$DATE" "+%Y%m%d-%H%M%S"`
 build_dir="$current_dir/../build/$build_id"
 
 test -e "$build_dir" && die "$build_dir already exists"
