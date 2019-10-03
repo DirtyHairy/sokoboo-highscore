@@ -13,9 +13,20 @@ class HighscoreController extends AbstractController
     /**
      * @return Response
      *
-     * @Route("/", name="sokoboo_index")
+     * @Route("/highscores", name="highscores")
      */
-    public function index(): Response {
-        return $this->render("index.html.twig");
+    public function highscores(): Response
+    {
+        return $this->render("highscores.html.twig", ["pageid" => "page-highscores"]);
+    }
+
+    /**
+     * @Route("/new-score", name="newscore")
+     *
+     * @return Response
+     */
+    public function newScore(): Response
+    {
+        return $this->render("newscore.html.twig", ["pageid" => "page-newscore"]);
     }
 }

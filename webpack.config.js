@@ -10,10 +10,7 @@ Encore
 // directory where compiled assets will be stored
     .setOutputPath('public/build/')
     .setPublicPath('/build')
-    // only needed for CDN's or sub-directory deploy
-    //.setManifestKeyPrefix('build/')
-
-    .addEntry('app', './assets/ts/index.tsx')
+    .addEntry('highscores', './assets/ts/index.tsx')
     // .splitEntryChunks()
     .disableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()

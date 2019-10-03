@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="{{ pageid }}">
 <head>
     <title>Sokoboo Scores</title>
     <meta charset="UTF-8">
@@ -17,7 +17,7 @@
         }
     </style>
 
-    {% for file in encore_entry_css_files('app') %}
+    {% for file in encore_entry_css_files('highscores') %}
         <link rel="stylesheet" href="{{ asset(file) }}">
     {% endfor %}
 </head>
@@ -26,20 +26,14 @@
 <img src="{{ asset('images/logo.jpg') }}" alt="Sokoboo!" id="sokoboo-logo"/>
 <div id="navigation">
     <ul>
-        <li><a href="#">Login/Register</a></li>
-        <li><a class="selected" href="#">Scores</a></li>
-        <li><a href="#">Enter Score</a></li>
-        <li><a href="#">Play</a></li>
-        <li><a href="#">Buy</a></li>
+        <li><a class="navigation-login" href="{{ path("create-user") }}">Login/Register</a></li>
+        <li><a class="navigation-highscores" href="{{ path("highscores") }}">Scores</a></li>
+        <li><a class="navigation-newscore" href="{{ path("newscore") }}">Enter Score</a></li>
+        <li><a href=" https://atariage.com/store/" target="_blank">Buy</a></li>
     </ul>
 </div>
 
-<div id="react-root"></div>
-
-{% for file in encore_entry_js_files('app') %}
-    <script src="{{ asset(file) }}"></script>
-{% endfor %}
+{% block content %}{% endblock %}
 
 </body>
 </html>
-

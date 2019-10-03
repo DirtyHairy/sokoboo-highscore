@@ -33,7 +33,9 @@ html {
     color: white;
     text-decoration: none;
 
-    &.selected {
+    .page-login &.navigation-login,
+    .page-highscores &.navigation-highscores,
+    .page-newscore &.navigation-newscore {
       color: yellow;
     }
   }

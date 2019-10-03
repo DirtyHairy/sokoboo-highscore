@@ -27,7 +27,7 @@ class LevelApiController extends AbstractController
     }
 
     /**
-     * @Route("/statistics", name="statistics")
+     * @Route("/statistics", name="api-statistics")
      *
      * @return Response
      */
@@ -37,7 +37,7 @@ class LevelApiController extends AbstractController
     }
 
     /**
-     * @Route("/level/{level<\d+>}/highscore", name="highscore")
+     * @Route("/level/{level<\d+>}/highscore", name="api-highscore")
      *
      * @param int $level
      * @return Response

@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <div id="react-root"></div>
+
+    {% for file in encore_entry_js_files('highscores') %}
+        <script src="{{ asset(file) }}" defer></script>
+    {% endfor %}
+{% endblock %}
