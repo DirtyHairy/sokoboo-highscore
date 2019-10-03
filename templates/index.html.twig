@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 
     {% for file in encore_entry_css_files('app') %}
-        <link rel="stylesheet" href="{{ file }}">
+        <link rel="stylesheet" href="{{ asset(file) }}">
     {% endfor %}
 </head>
 <body>
@@ -15,7 +15,7 @@
 <div id="react-root"></div>
 
 {% for file in encore_entry_js_files('app') %}
-    <script src="{{ file }}"></script>
+    <script src="{{ asset(file) }}"></script>
 {% endfor %}
 
 </body>
