@@ -31,6 +31,9 @@ test -x "$DATE" || die "date not available"
 TAR=`alternatives gtar tar`
 test -x "$TAR" || "tar not available"
 
+YARN=`alternatives yarn`
+test -x "$YARN" || "yarn not available"
+
 current_dir=`"$READLINK" $0`
 current_dir=`dirname $0`
 
@@ -47,8 +50,11 @@ cd "$build_dir"
 echo "BUILD_ID=$build_id" >> .env
 "$COMPOSER" dump-env prod
 
+"$YARN" install
+"$YARN" build
+
 cd ..
-"$TAR" -cjf "build-$build_id.tar.bz2" --exclude .git "$build_id"
+"$TAR" -cjf "build-$build_id.tar.bz2" --exclude .git --exclude node_modules "$build_id"
 
 echo
 echo build $build_id is ready

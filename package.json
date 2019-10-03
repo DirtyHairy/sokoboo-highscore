@@ -1,0 +1,25 @@
+{
+    "devDependencies": {
+        "@symfony/webpack-encore": "^0.28.0",
+        "@types/react": "^16.9.4",
+        "@types/react-dom": "^16.9.1",
+        "core-js": "^3.0.0",
+        "react": "^16.10.1",
+        "react-dom": "^16.10.1",
+        "regenerator-runtime": "^0.13.2",
+        "sass": "^1.23.0",
+        "sass-loader": "7",
+        "ts-loader": "5",
+        "tslib": "^1.10.0",
+        "typescript": "^3.6.3",
+        "webpack-notifier": "^1.6.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    }
+}

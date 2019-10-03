@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Sokoboo Scores</title>
-        <meta charset="UTF-8">
-        <style>
-            html {
-                background: black;
-                color: #fff;
-            }
+<head>
+    <title>Sokoboo Scores</title>
+    <meta charset="UTF-8">
 
-            img {
-                display: block;
-                margin: auto;
-            }
-        </style>
-    </head>
-    <img src="{{ asset('images/logo.png') }}" alt="Sokoboo!"/>
-    </body>
+    {% for file in encore_entry_css_files('app') %}
+        <link rel="stylesheet" href="{{ file }}">
+    {% endfor %}
+</head>
+<body>
+
+<img src="{{ asset('images/logo.png') }}" alt="Sokoboo!"/>
+
+<div id="react-root"></div>
+
+{% for file in encore_entry_js_files('app') %}
+    <script src="{{ file }}"></script>
+{% endfor %}
+
+</body>
 </html>
 
