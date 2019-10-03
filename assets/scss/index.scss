@@ -1,10 +1,40 @@
 html {
   background: black;
   color: #fff;
+  font-family: vga8;
+  font-size: 16px;
 }
 
 #sokoboo-logo {
-  height: 15rem;
+  height: 240px;
   margin: auto;
   display: block;
+}
+
+#navigation {
+  font-family: ibmconv;
+  font-size: 16px;
+  text-align: center;
+
+  margin-top: 1em;
+  margin-bottom: 2em;
+
+  ul {
+    display: inline;
+    list-style: none;
+  }
+
+  li {
+    display: inline;
+    margin-right: 3em;
+  }
+
+  a, a:visited, a:hover {
+    color: white;
+    text-decoration: none;
+
+    &.selected {
+      color: yellow;
+    }
+  }
 }

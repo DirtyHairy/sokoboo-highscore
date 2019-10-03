@@ -1,6 +1,7 @@
 .idea
 .user.ini
 /ts-build
+/build
 
 ###> symfony/framework-bundle ###
 /.env.local

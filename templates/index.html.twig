@@ -3,6 +3,19 @@
 <head>
     <title>Sokoboo Scores</title>
     <meta charset="UTF-8">
+    <link rel="icon" href="{{ asset('images/favicon.png') }}">
+
+    <style>
+        @font-face {
+            font-family: 'ibmconv';
+            src: url("{{ asset('fonts/Px437_IBM_Conv.woff') }}") format("woff");
+        }
+
+        @font-face {
+            font-family: 'vga8';
+            src: url("{{ asset('fonts/PxPlus_IBM_VGA8.woff') }}") format("woff");
+        }
+    </style>
 
     {% for file in encore_entry_css_files('app') %}
         <link rel="stylesheet" href="{{ asset(file) }}">
@@ -11,6 +24,15 @@
 <body>
 
 <img src="{{ asset('images/logo.jpg') }}" alt="Sokoboo!" id="sokoboo-logo"/>
+<div id="navigation">
+    <ul>
+        <li><a href="#">Login/Register</a></li>
+        <li><a class="selected" href="#">Scores</a></li>
+        <li><a href="#">Enter Score</a></li>
+        <li><a href="#">Play</a></li>
+        <li><a href="#">Buy</a></li>
+    </ul>
+</div>
 
 <div id="react-root"></div>
 
