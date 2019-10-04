@@ -20,7 +20,7 @@ class LevelDataProvider
         for ($i = 0; $i <= 255; $i++) {
             $levelStatistics[$i] = (new LevelStatistics())
                 ->setBestScore(random_int(10, 50))
-                ->setPlayedCount(max(0, random_int($i * -10, 5 * (300 - $i))));
+                ->setPlayedCount(max(0, random_int($i * -5, 5 * (600 - $i))));
         }
 
         return $levelStatistics;

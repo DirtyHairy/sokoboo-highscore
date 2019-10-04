@@ -10,7 +10,7 @@ Encore
 // directory where compiled assets will be stored
     .setOutputPath('public/build/')
     .setPublicPath('/build')
-    .addEntry('highscores', './assets/ts/index.tsx')
+    .addEntry('highscores', './assets/ts/highscores.tsx')
     // .splitEntryChunks()
     .disableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
