@@ -12,7 +12,7 @@ class HighscoreController extends AbstractController
 {
     /**
      * @return Response
-     *
+     * @Route("/highscores/{level<\d+>}", name="highscores-for-level")
      * @Route("/highscores", name="highscores")
      */
     public function highscores(): Response

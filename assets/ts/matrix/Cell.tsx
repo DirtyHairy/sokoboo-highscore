@@ -46,7 +46,7 @@ const Cell: FunctionComponent<Props> = props => (
         style={{ backgroundColor: color(props.statistics.playedCount, props.maxPlayedCount) }}
     >
         <a
-            href="#"
+            href={`/highscores/${props.level}`}
             css={{
                 display: 'inline-block',
                 width: '100%',

@@ -16,7 +16,7 @@ export interface Props {
 const PlayerIcon = styled.i({
     width: '1rem',
     height: '1rem',
-    backgroundImage: 'url("images/player.png")',
+    backgroundImage: 'url("/images/player.png")',
     backgroundSize: 'contain',
     display: 'inline-block',
     verticalAlign: 'bottom'
