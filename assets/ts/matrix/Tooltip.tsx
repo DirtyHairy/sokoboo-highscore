@@ -13,14 +13,18 @@ export interface Props {
     statistics: LevelStatistics;
 }
 
-const PlayerIcon = styled.i({
-    width: '1rem',
-    height: '1rem',
-    backgroundImage: 'url("/images/player.png")',
-    backgroundSize: 'contain',
-    display: 'inline-block',
-    verticalAlign: 'bottom'
-});
+const PlayerIcon: FunctionComponent = () => (
+    <i
+        css={{
+            width: '1rem',
+            height: '1rem',
+            backgroundSize: 'contain',
+            display: 'inline-block',
+            verticalAlign: 'bottom'
+        }}
+        className="player-icon"
+    />
+);
 
 const TRANSFORM = 'translateY(-100%) translate(-5px, 5px)';
 

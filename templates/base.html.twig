@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="{{ pageid }}">
+<html class="{{ pageid }}" lang="en">
 <head>
     <title>Sokoboo Scores</title>
     <meta charset="UTF-8">
@@ -14,6 +14,10 @@
         @font-face {
             font-family: 'vga8';
             src: url("{{ asset('fonts/PxPlus_IBM_VGA8.woff') }}") format("woff");
+        }
+
+        .player-icon {
+            background-image: url("{{ asset('images/player.png') }}");
         }
     </style>
 
