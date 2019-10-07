@@ -20,8 +20,8 @@ function heading(level: number, players: number): string {
 
 const WIDTH = heading(255, 1000000000).length;
 
-function line(highscore: Highscore): string {
-    const score = highscore.score.toString();
+function line(highscore: Highscore, padScore: number): string {
+    const score = highscore.score.toString().padStart(padScore, ' ');
 
     return `${highscore.nick} ${'.'.repeat(Math.max(WIDTH - 2 - highscore.nick.length - score.length, 0))} ${score}`;
 }
@@ -38,10 +38,12 @@ const Message: FunctionComponent<{ message: string }> = ({ message }) => (
     </span>
 );
 
-const Line = styled.div({
+const Line = styled.pre({
     textAlign: 'center',
     fontFamily: 'ibmconv',
-    lineHeight: '2em'
+    lineHeight: '2em',
+    margin: 0,
+    display: 'block'
 });
 
 const Scores: FunctionComponent<Props> = ({ level, statistics }) => {
@@ -56,14 +58,16 @@ const Scores: FunctionComponent<Props> = ({ level, statistics }) => {
     }
 
     highscores.sort((a, b) => a.score - b.score);
+    const scoreSlice = highscores.slice(0, 15);
+    const maxScoreLength = Math.max(...scoreSlice.map(s => s.score.toString().length));
 
     return (
         <Fragment>
             {[
                 <Line css={{ marginBottom: '2em' }} key="heading">
-                    {`${statistics.playedCount} Players for Level ${level}/$${level.toString(16).padStart(2, '0')}`}
+                    {`${statistics.playedCount} Scores for Level ${level}/$${level.toString(16).padStart(2, '0')}`}
                 </Line>,
-                ...highscores.slice(0, 15).map((h, i) => <Line key={i}>{line(h)}</Line>)
+                ...highscores.slice(0, 15).map((h, i) => <Line key={i}>{line(h, maxScoreLength)}</Line>)
             ]}
         </Fragment>
     );

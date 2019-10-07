@@ -32,7 +32,9 @@
 </head>
 <body>
 
-<img src="{{ asset('images/logo.jpg') }}" alt="Sokoboo!" id="sokoboo-logo"/>
+<a href="{{ path("highscores") }}">
+    <img src="{{ asset('images/logo.jpg') }}" alt="Sokoboo!" id="sokoboo-logo"/>
+</a>
 <div id="navigation">
     <ul>
         <li><a class="navigation-login" href="{{ path("create-user") }}">Login/Register</a></li>

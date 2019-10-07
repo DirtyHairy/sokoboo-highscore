@@ -1,7 +1,8 @@
 /** @jsx jsx */
 
 import useAxios from 'axios-hooks';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useMemo, useRef } from 'react';
+import { useHistory } from 'react-router';
 
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
@@ -39,7 +40,55 @@ const Message: FunctionComponent<{ message: string }> = ({ message }) => (
     </span>
 );
 
+function navigateLevel(level: number | undefined, e: KeyboardEvent): number {
+    if (level === undefined) {
+        return 0;
+    }
+
+    switch (e.key) {
+        case 'ArrowLeft':
+            return (level + 255) % 256;
+
+        case 'ArrowRight':
+            return (level + 1) % 256;
+
+        case 'ArrowUp':
+            return (level + 240) % 256;
+
+        case 'ArrowDown':
+            return (level + 16) % 256;
+
+        default:
+            return level;
+    }
+}
+
 const App: FunctionComponent<Props> = ({ level }) => {
+    const levelRef = useRef<number | undefined>(level);
+    const history = useHistory();
+
+    const keydownHandler = useMemo(() => {
+        const handler = (e: KeyboardEvent) => {
+            const newLevel = navigateLevel(levelRef.current, e);
+
+            if (newLevel === levelRef.current) {
+                return;
+            }
+
+            e.preventDefault();
+
+            history.push(`/highscores/${newLevel}`);
+        };
+
+        window.addEventListener('keydown', handler);
+
+        return handler;
+    }, []);
+
+    useEffect(() => () => window.removeEventListener('keydown', keydownHandler), []);
+
+    levelRef.current = level;
+
     if (level !== undefined && (level < 0 || level > 255)) {
         level = undefined;
     }
@@ -68,7 +117,7 @@ const App: FunctionComponent<Props> = ({ level }) => {
                 <Matrix css={{ margin: 'auto' }} statistics={levelStatistics} selectedLevel={level} />
             </Block>
             <Block css={{ marginLeft: '2em' }}>
-                {level ? (
+                {level !== undefined ? (
                     <Scores level={level} statistics={levelStatistics[level]} />
                 ) : (
                     <Message message="Select a level" />

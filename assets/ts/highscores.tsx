@@ -8,7 +8,6 @@ import { render } from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import App from './App';
-import LevelMatrix from './LevelMatrix';
 
 const root = document.getElementById('react-root');
 
