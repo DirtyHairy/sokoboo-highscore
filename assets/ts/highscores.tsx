@@ -7,6 +7,7 @@ import React, { FunctionComponent } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import App from './App';
 import LevelMatrix from './LevelMatrix';
 
 const root = document.getElementById('react-root');
@@ -25,14 +26,14 @@ function parseLevel(level: string | undefined): number | undefined {
     return isNaN(result) ? undefined : result;
 }
 
-const App: FunctionComponent = () => (
+const Routing: FunctionComponent = () => (
     <Router>
         <Route
             exact
             path="/highscores/:level?"
-            render={({ match }) => <LevelMatrix selectedLevel={parseLevel(match.params.level)} />}
+            render={({ match }) => <App level={parseLevel(match.params.level)} />}
         />
     </Router>
 );
 
-render(<App />, root);
+render(<Routing />, root);
