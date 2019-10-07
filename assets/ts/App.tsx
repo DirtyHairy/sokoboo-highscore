@@ -40,23 +40,23 @@ const Message: FunctionComponent<{ message: string }> = ({ message }) => (
     </span>
 );
 
-function navigateLevel(level: number | undefined, e: KeyboardEvent): number {
-    if (level === undefined) {
-        return 0;
+function navigateLevel(level: number | undefined, e: KeyboardEvent): number | undefined {
+    if (e.ctrlKey || e.shiftKey) {
+        return level;
     }
 
     switch (e.key) {
         case 'ArrowLeft':
-            return (level + 255) % 256;
+            return level === undefined ? 0 : (level + 255) % 256;
 
         case 'ArrowRight':
-            return (level + 1) % 256;
+            return level === undefined ? 0 : (level + 1) % 256;
 
         case 'ArrowUp':
-            return (level + 240) % 256;
+            return level === undefined ? 0 : (level + 240) % 256;
 
         case 'ArrowDown':
-            return (level + 16) % 256;
+            return level === undefined ? 0 : (level + 16) % 256;
 
         default:
             return level;
