@@ -1,6 +1,7 @@
 /**@jsx jsx */
 
 import { FunctionComponent } from 'react';
+import { Link } from 'react-router-dom';
 
 import { jsx } from '@emotion/core';
 
@@ -14,6 +15,7 @@ export interface Props {
     level: number;
     maxPlayedCount: number;
     statistics: LevelStatistics;
+    selected: boolean;
 }
 
 function color(x: number, max: number): string {
@@ -30,13 +32,13 @@ const Cell: FunctionComponent<Props> = props => (
             width: WIDE,
             border: BORDER,
             textAlign: 'center',
-            color: 'rgba(50, 50, 50, 0.5)',
+            color: props.selected ? 'white' : 'rgba(50, 50, 50, 0.5)',
             position: 'relative',
             backgroundClip: IS_FIREFOX ? 'padding-box' : 'border-box',
             padding: 0,
 
             '&:hover': {
-                color: 'black'
+                color: props.selected ? 'white' : 'black'
             },
 
             '& .tooltip': {
@@ -47,10 +49,19 @@ const Cell: FunctionComponent<Props> = props => (
                 display: 'initial'
             }
         }}
-        style={{ backgroundColor: color(props.statistics.playedCount, props.maxPlayedCount) }}
+        style={
+            props.selected
+                ? {
+                      backgroundImage: `linear-gradient(45deg, ${color(
+                          props.statistics.playedCount,
+                          props.maxPlayedCount
+                      )}, black)`
+                  }
+                : { backgroundColor: color(props.statistics.playedCount, props.maxPlayedCount) }
+        }
     >
-        <a
-            href={`/highscores/${props.level}`}
+        <Link
+            to={`/highscores/${props.level}`}
             css={{
                 display: 'inline-block',
                 width: '100%',
@@ -61,7 +72,7 @@ const Cell: FunctionComponent<Props> = props => (
             }}
         >
             {props.level.toString(16).padStart(2, '0')}
-        </a>
+        </Link>
         <Tooltip level={props.level} statistics={props.statistics} />
     </td>
 );

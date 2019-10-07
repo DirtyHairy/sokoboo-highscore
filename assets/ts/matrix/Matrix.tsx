@@ -10,6 +10,7 @@ import Cell from './Cell';
 import { BORDER, NARROW, WIDE } from './definitions';
 
 export interface Props {
+    selectedLevel: number | undefined;
     statistics: Array<LevelStatistics>;
 }
 
@@ -34,7 +35,7 @@ const CellW = styled.td({
     textAlign: 'center'
 });
 
-const Matrix: FunctionComponent<Props> = ({ statistics }) => {
+const Matrix: FunctionComponent<Props> = ({ statistics, selectedLevel }) => {
     const maxPlayed = Math.max(...statistics.map(x => x.playedCount));
 
     return (
@@ -55,14 +56,19 @@ const Matrix: FunctionComponent<Props> = ({ statistics }) => {
                         <tr key={i}>
                             <CellW>{i.toString(16).toUpperCase()}</CellW>
                             <Fragment>
-                                {new Array(16).fill(1).map((_, j) => (
-                                    <Cell
-                                        key={i * 16 + j}
-                                        level={i * 16 + j}
-                                        statistics={statistics[i * 16 + j]}
-                                        maxPlayedCount={maxPlayed}
-                                    />
-                                ))}
+                                {new Array(16).fill(1).map((_, j) => {
+                                    const level = i * 16 + j;
+
+                                    return (
+                                        <Cell
+                                            selected={level === selectedLevel}
+                                            key={level}
+                                            level={level}
+                                            statistics={statistics[level]}
+                                            maxPlayedCount={maxPlayed}
+                                        />
+                                    );
+                                })}
                             </Fragment>
                         </tr>
                     ))}

@@ -3,10 +3,11 @@ import '../scss/highscores.scss';
 import Axios from 'axios';
 import { configure as configureAxios } from 'axios-hooks';
 import LRUCache from 'lru-cache';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { render } from 'react-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import HighscoreOverview from './LevelMatrix';
+import LevelMatrix from './LevelMatrix';
 
 const root = document.getElementById('react-root');
 
@@ -14,4 +15,24 @@ const axios = Axios.create();
 const cache = new LRUCache({ max: 300 });
 configureAxios({ axios, cache });
 
-render(<HighscoreOverview />, root);
+function parseLevel(level: string | undefined): number | undefined {
+    if (!level) {
+        return undefined;
+    }
+
+    const result = parseInt(level, 10);
+
+    return isNaN(result) ? undefined : result;
+}
+
+const App: FunctionComponent = () => (
+    <Router>
+        <Route
+            exact
+            path="/highscores/:level?"
+            render={({ match }) => <LevelMatrix selectedLevel={parseLevel(match.params.level)} />}
+        />
+    </Router>
+);
+
+render(<App />, root);
