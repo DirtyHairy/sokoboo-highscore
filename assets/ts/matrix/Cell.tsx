@@ -8,6 +8,8 @@ import LevelStatistics from '../model/LevelStatistics';
 import { BORDER, WIDE } from './definitions';
 import Tooltip from './Tooltip';
 
+const IS_FIREFOX = !!window.navigator.userAgent.match(/firefox/i);
+
 export interface Props {
     level: number;
     maxPlayedCount: number;
@@ -30,6 +32,8 @@ const Cell: FunctionComponent<Props> = props => (
             textAlign: 'center',
             color: 'rgba(50, 50, 50, 0.5)',
             position: 'relative',
+            backgroundClip: IS_FIREFOX ? 'padding-box' : 'border-box',
+            padding: 0,
 
             '&:hover': {
                 color: 'black'
