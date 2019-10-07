@@ -39,10 +39,10 @@ class LevelDataProvider
         /** @var HighScore[] $highScores */
         $highScores = [];
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $highScores[$i] = (new HighScore())
                 ->setNick(sprintf("player%s", $i + 1))
-                ->setScore(random_int(5, 25));
+                ->setScore(random_int(5, 100));
         }
 
         return $highScores;
