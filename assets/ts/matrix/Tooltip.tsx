@@ -39,7 +39,7 @@ const Tooltip: FunctionComponent<Props> = props => (
         <div css={{ marginBottom: '0.5em' }}>
             <i className="player-icon" /> {props.statistics.playedCount}
         </div>
-        <div># {props.statistics.bestScore}</div>
+        <div># {props.statistics.bestScore.moves}</div>
     </div>
 );
 

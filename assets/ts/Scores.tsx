@@ -21,7 +21,7 @@ function heading(level: number, players: number): string {
 const WIDTH = heading(255, 1000000000).length;
 
 function line(highscore: Highscore, padScore: number): string {
-    const score = highscore.score.toString().padStart(padScore, ' ');
+    const score = highscore.moves.toString().padStart(padScore, ' ');
 
     return `${highscore.nick} ${'.'.repeat(Math.max(WIDTH - 2 - highscore.nick.length - score.length, 0))} ${score}`;
 }
@@ -57,9 +57,9 @@ const Scores: FunctionComponent<Props> = ({ level, statistics }) => {
         return <Message message="Network error" />;
     }
 
-    highscores.sort((a, b) => a.score - b.score);
+    highscores.sort((a, b) => a.moves - b.moves);
     const scoreSlice = highscores.slice(0, 15);
-    const maxScoreLength = Math.max(...scoreSlice.map(s => s.score.toString().length));
+    const maxScoreLength = Math.max(...scoreSlice.map(s => s.moves.toString().length));
 
     return (
         <Fragment>

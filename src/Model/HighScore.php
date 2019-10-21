@@ -10,7 +10,42 @@ class HighScore
     private $nick = "";
 
     /** @var int */
-    private $score = 0;
+    private $moves = 0;
+
+    /** @var int */
+    private $seconds = 0;
+
+    /**
+     * HighScore constructor.
+     *
+     * @param string $nick
+     * @param int $moves
+     * @param int $seconds
+     */
+    public function __construct(string $nick, int $moves, int $seconds)
+    {
+        $this->nick = $nick;
+        $this->moves = $moves;
+        $this->seconds = $seconds;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSeconds(): int
+    {
+        return $this->seconds;
+    }
+
+    /**
+     * @param int $seconds
+     * @return HighScore
+     */
+    public function setSeconds(int $seconds): HighScore
+    {
+        $this->seconds = $seconds;
+        return $this;
+    }
 
     /**
      * @return string
@@ -33,18 +68,18 @@ class HighScore
     /**
      * @return int
      */
-    public function getScore(): int
+    public function getMoves(): int
     {
-        return $this->score;
+        return $this->moves;
     }
 
     /**
-     * @param int $score
+     * @param int $moves
      * @return HighScore
      */
-    public function setScore(int $score): HighScore
+    public function setMoves(int $moves): HighScore
     {
-        $this->score = $score;
+        $this->moves = $moves;
         return $this;
     }
 }
