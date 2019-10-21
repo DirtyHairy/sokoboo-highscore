@@ -1,4 +1,12 @@
 {
     "editor.formatOnSave": true,
-    "importSorter.generalConfiguration.sortOnBeforeSave": true
+    "importSorter.generalConfiguration.sortOnBeforeSave": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "build/**/*": true
+    }
 }
