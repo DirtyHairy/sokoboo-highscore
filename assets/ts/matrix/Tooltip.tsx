@@ -4,6 +4,7 @@ import { FunctionComponent } from 'react';
 
 import { jsx } from '@emotion/core';
 
+import { formatSeconds } from '../model/Highscore';
 import LevelStatistics from '../model/LevelStatistics';
 import { WIDE } from './definitions';
 
@@ -39,7 +40,10 @@ const Tooltip: FunctionComponent<Props> = props => (
         <div css={{ marginBottom: '0.5em' }}>
             <i className="player-icon" /> {props.statistics.playedCount}
         </div>
-        <div># {props.statistics.bestScore.moves}</div>
+        <div css={{ marginBottom: '0.5em' }}># {props.statistics.bestScore.moves}</div>
+        <div>
+            <i className="clock-icon" /> {formatSeconds(props.statistics.bestScore.seconds)}
+        </div>
     </div>
 );
 
