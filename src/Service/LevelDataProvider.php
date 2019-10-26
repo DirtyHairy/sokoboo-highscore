@@ -18,7 +18,13 @@ class LevelDataProvider
         $levelStatistics = [];
 
         for ($i = 0; $i <= 255; $i++) {
-            $highScore = new HighScore("someplayer", random_int(10, 50), random_int(30, 5400));
+            $highScore = new HighScore(
+                "someplayer",
+                random_int(10, 50),
+                random_int(30, 5400),
+                random_int(0, 50 * 24 * 3600 * 365)
+            );
+
             $levelStatistics[$i] = new LevelStatistics(max(0, random_int($i * -5, 5 * (600 - $i))), $highScore);
         }
 
@@ -39,7 +45,12 @@ class LevelDataProvider
         $highScores = [];
 
         for ($i = 0; $i < 50; $i++) {
-            $highScores[$i] = new HighScore(sprintf("player%s", $i + 1), random_int(5, 100), random_int(30, 5400));
+            $highScores[$i] = new HighScore(
+                sprintf("player%s", $i + 1),
+                random_int(5, 100),
+                random_int(30, 5400),
+                random_int(0, 50 * 24 * 3600 * 365)
+            );
         }
 
         return $highScores;

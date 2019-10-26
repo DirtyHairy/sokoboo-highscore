@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import useAxios from 'axios-hooks';
-import { FunctionComponent, useEffect, useMemo, useRef } from 'react';
+import { Fragment, FunctionComponent, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router';
 
 import { jsx } from '@emotion/core';
@@ -18,13 +18,11 @@ export interface Props {
 const Block = styled.div({
     textAlign: 'center',
     display: 'inline-block',
-    verticalAlign: 'top',
-    width: '38em'
+    verticalAlign: 'top'
 });
 
 const Layout = styled.div({
-    width: '80em',
-    margin: 'auto',
+    width: '100vw',
     textAlign: 'center'
 });
 
@@ -111,20 +109,28 @@ const App: FunctionComponent<Props> = ({ level }) => {
         );
     }
 
-    return (
-        <div css={{ width: '80em', margin: 'auto' }}>
-            <Block css={{ marginRight: '2em' }}>
+    if (level !== undefined) {
+        return (
+            <Layout>
+                <Block css={{ marginRight: '2em' }}>
+                    <Matrix css={{ margin: 'auto' }} statistics={levelStatistics} selectedLevel={level} />
+                </Block>
+                <Block css={{ marginLeft: '2em' }}>
+                    {level !== undefined ? (
+                        <Scores level={level} statistics={levelStatistics[level]} />
+                    ) : (
+                        <Message message="Select a level" />
+                    )}
+                </Block>
+            </Layout>
+        );
+    } else {
+        return (
+            <Layout>
                 <Matrix css={{ margin: 'auto' }} statistics={levelStatistics} selectedLevel={level} />
-            </Block>
-            <Block css={{ marginLeft: '2em' }}>
-                {level !== undefined ? (
-                    <Scores level={level} statistics={levelStatistics[level]} />
-                ) : (
-                    <Message message="Select a level" />
-                )}
-            </Block>
-        </div>
-    );
+            </Layout>
+        );
+    }
 };
 
 export default App;

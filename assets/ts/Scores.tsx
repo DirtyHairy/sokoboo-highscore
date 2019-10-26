@@ -6,70 +6,72 @@ import { Fragment, FunctionComponent } from 'react';
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 
-import Highscore from './model/Highscore';
+import Highscore, { formatSeconds, formatTimestamp } from './model/Highscore';
 import LevelStatistics from './model/LevelStatistics';
+
+const Container = styled.div({ width: '50em' });
+
+const Title = styled.div({ fontFamily: 'ibmconv', textAlign: 'center', marginBottom: '2em' });
 
 export interface Props {
     level: number;
     statistics: LevelStatistics;
 }
 
-function heading(level: number, players: number): string {
-    return `Level: ${level}/${level.toString(16).padStart(2, '0')} , Players: ${players}`;
-}
-
-const WIDTH = heading(255, 1000000000).length;
-
-function line(highscore: Highscore, padScore: number): string {
-    const score = highscore.moves.toString().padStart(padScore, ' ');
-
-    return `${highscore.nick} ${'.'.repeat(Math.max(WIDTH - 2 - highscore.nick.length - score.length, 0))} ${score}`;
-}
-
-const Message: FunctionComponent<{ message: string }> = ({ message }) => (
-    <span
-        css={{
-            fontFamily: 'ibmconv',
-            display: 'inline-block',
-            marginTop: '15em'
-        }}
-    >
-        {message}
-    </span>
-);
-
-const Line = styled.pre({
-    textAlign: 'center',
-    fontFamily: 'ibmconv',
-    lineHeight: '2em',
-    margin: 0,
-    display: 'block'
-});
-
 const Scores: FunctionComponent<Props> = ({ level, statistics }) => {
     const [{ data: highscores, loading, error }] = useAxios<Array<Highscore>>(`/api/level/${level}/highscore`);
 
     if (loading) {
-        return <Message message="Loading..." />;
+        return (
+            <Container>
+                <Title>Loading...</Title>
+            </Container>
+        );
     }
 
     if (error) {
-        return <Message message="Network error" />;
+        return (
+            <Container>
+                <Title>Network error</Title>
+            </Container>
+        );
     }
 
-    highscores.sort((a, b) => a.moves - b.moves);
-    const scoreSlice = highscores.slice(0, 15);
-    const maxScoreLength = Math.max(...scoreSlice.map(s => s.moves.toString().length));
-
     return (
-        <Fragment>
-            {[
-                <Line css={{ marginBottom: '2em' }} key="heading">
-                    {`${statistics.playedCount} Scores for Level ${level}/$${level.toString(16).padStart(2, '0')}`}
-                </Line>,
-                ...highscores.slice(0, 15).map((h, i) => <Line key={i}>{line(h, maxScoreLength)}</Line>)
-            ]}
-        </Fragment>
+        <Container>
+            <Title>----====≡≡≡≡ LEVEL {level} ≡≡≡≡====----</Title>
+            <table css={{ fontFamily: 'ibmconv', margin: 'auto' }}>
+                <thead>
+                    <tr>
+                        <td css={{ width: '7em' }}> PLACE</td>
+                        <td css={{ width: '7em' }}>MOVES</td>
+                        <td css={{ width: '10em' }}>TIME</td>
+                        <td css={{ width: '13em' }}>DATE</td>
+                        <td>NAME</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                </thead>
+                <tbody css={{ lineHeight: '2em' }}>
+                    {Array(Math.min(8, highscores.length))
+                        .fill(1)
+                        .map((_, i) => {
+                            const h = highscores[i];
+
+                            return (
+                                <tr>
+                                    <td>{i + 1}</td>
+                                    <td>{h.moves}</td>
+                                    <td>{formatSeconds(h.seconds)}</td>
+                                    <td>{formatTimestamp(h.timestamp)}</td>
+                                    <td>{h.nick}</td>
+                                </tr>
+                            );
+                        })}
+                </tbody>
+            </table>
+        </Container>
     );
 };
 

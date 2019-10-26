@@ -15,18 +15,41 @@ class HighScore
     /** @var int */
     private $seconds = 0;
 
+    /** @var int */
+    private $timestamp = 0;
+
+    /**
+     * @return int
+     */
+    public function getTimestamp(): int
+    {
+        return $this->timestamp;
+    }
+
+    /**
+     * @param int $timestamp
+     * @return HighScore
+     */
+    public function setTimestamp(int $timestamp): HighScore
+    {
+        $this->timestamp = $timestamp;
+        return $this;
+    }
+
     /**
      * HighScore constructor.
      *
      * @param string $nick
      * @param int $moves
      * @param int $seconds
+     * @param int $timestamp
      */
-    public function __construct(string $nick, int $moves, int $seconds)
+    public function __construct(string $nick, int $moves, int $seconds, int $timestamp)
     {
         $this->nick = $nick;
         $this->moves = $moves;
         $this->seconds = $seconds;
+        $this->timestamp = $timestamp;
     }
 
     /**

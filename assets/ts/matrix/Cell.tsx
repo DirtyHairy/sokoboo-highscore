@@ -6,10 +6,8 @@ import { Link } from 'react-router-dom';
 import { jsx } from '@emotion/core';
 
 import LevelStatistics from '../model/LevelStatistics';
-import { BORDER, WIDE } from './definitions';
+import { BORDER, IS_FIREFOX, WIDE } from './definitions';
 import Tooltip from './Tooltip';
-
-const IS_FIREFOX = !!window.navigator.userAgent.match(/firefox/i);
 
 export interface Props {
     level: number;

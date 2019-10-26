@@ -2,6 +2,7 @@ interface Highscore {
     nick: string;
     moves: number;
     seconds: number;
+    timestamp: number;
 }
 
 export function formatSeconds(seconds: number): string {
@@ -14,6 +15,24 @@ export function formatSeconds(seconds: number): string {
     const pad = (x: number): string => x.toString().padStart(2, '0');
 
     return hours ? `${pad(hours)}:${pad(minutes)}:${pad(seconds)}` : `${pad(minutes)}:${pad(seconds)}`;
+}
+
+export function formatTimestamp(timestamp: number): string {
+    const date = new Date(timestamp * 1000);
+
+    return (
+        date
+            .getMonth()
+            .toString()
+            .padStart(2, '0') +
+        '/' +
+        date
+            .getDay()
+            .toString()
+            .padStart(2, '0') +
+        '/' +
+        date.getFullYear()
+    );
 }
 
 export default Highscore;

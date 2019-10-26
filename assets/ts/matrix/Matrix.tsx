@@ -8,6 +8,7 @@ import styled from '@emotion/styled';
 import LevelStatistics from '../model/LevelStatistics';
 import Cell from './Cell';
 import { BORDER, NARROW, WIDE } from './definitions';
+import EmptyCell from './EmptyCell';
 
 export interface Props {
     selectedLevel: number | undefined;
@@ -37,6 +38,8 @@ const CellW = styled.td({
     textAlign: 'center'
 });
 
+const LEVEL_COUNT = 100;
+
 const Matrix: FunctionComponent<Props> = ({ statistics, selectedLevel, className }) => {
     const maxPlayed = Math.max(...statistics.map(x => x.playedCount));
 
@@ -46,21 +49,21 @@ const Matrix: FunctionComponent<Props> = ({ statistics, selectedLevel, className
                 <tr>
                     <CellNW />
                     <Fragment>
-                        {new Array(16).fill(1).map((_, i) => (
+                        {new Array(10).fill(1).map((_, i) => (
                             <CellN key={i}>{i.toString(16).toUpperCase()}</CellN>
                         ))}
                     </Fragment>
                 </tr>
             </thead>
             <tbody>
-                {new Array(16).fill(1).map((_, i) => (
+                {new Array(Math.ceil(LEVEL_COUNT / 10)).fill(1).map((_, i) => (
                     <tr key={i}>
-                        <CellW>{i.toString(16).toUpperCase()}</CellW>
+                        <CellW>{i.toString(10).toUpperCase()}</CellW>
                         <Fragment>
-                            {new Array(16).fill(1).map((_, j) => {
-                                const level = i * 16 + j;
+                            {new Array(10).fill(1).map((_, j) => {
+                                const level = i * 10 + j;
 
-                                return (
+                                return level < LEVEL_COUNT ? (
                                     <Cell
                                         selected={level === selectedLevel}
                                         key={level}
@@ -68,6 +71,8 @@ const Matrix: FunctionComponent<Props> = ({ statistics, selectedLevel, className
                                         statistics={statistics[level]}
                                         maxPlayedCount={maxPlayed}
                                     />
+                                ) : (
+                                    <EmptyCell />
                                 );
                             })}
                         </Fragment>
