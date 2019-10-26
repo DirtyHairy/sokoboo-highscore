@@ -34,9 +34,7 @@ const Tooltip: FunctionComponent<Props> = props => (
         }}
         className="tooltip"
     >
-        <div css={{ marginBottom: '0.5em' }}>
-            ☰ {props.level}/${props.level.toString(16).padStart(2, '0')}
-        </div>
+        <div css={{ marginBottom: '0.5em' }}>☰ {props.level}</div>
         <div css={{ marginBottom: '0.5em' }}>
             <i className="player-icon" /> {props.statistics.playedCount}
         </div>

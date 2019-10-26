@@ -15,15 +15,15 @@ export interface Props {
     level: number | undefined;
 }
 
-const Block = styled.div({
-    textAlign: 'center',
-    display: 'inline-block',
-    verticalAlign: 'top'
-});
-
 const Layout = styled.div({
-    width: '100vw',
-    textAlign: 'center'
+    display: 'flex',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap',
+    '&': {
+        justifyContent: 'space-evenly'
+    },
+    marginLeft: '1rem',
+    marginRight: '1rem'
 });
 
 const Message: FunctionComponent<{ message: string }> = ({ message }) => (
@@ -112,16 +112,12 @@ const App: FunctionComponent<Props> = ({ level }) => {
     if (level !== undefined) {
         return (
             <Layout>
-                <Block css={{ marginRight: '2em' }}>
-                    <Matrix css={{ margin: 'auto' }} statistics={levelStatistics} selectedLevel={level} />
-                </Block>
-                <Block css={{ marginLeft: '2em' }}>
-                    {level !== undefined ? (
-                        <Scores level={level} statistics={levelStatistics[level]} />
-                    ) : (
-                        <Message message="Select a level" />
-                    )}
-                </Block>
+                <Scores css={{ marginRight: '1rem' }} level={level} statistics={levelStatistics[level]} />
+                <Matrix
+                    css={{ marginTop: '3em', marginLeft: '1rem' }}
+                    statistics={levelStatistics}
+                    selectedLevel={level}
+                />
             </Layout>
         );
     } else {

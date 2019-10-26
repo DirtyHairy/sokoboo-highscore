@@ -69,7 +69,7 @@ const Cell: FunctionComponent<Props> = props => (
                 textDecoration: 'none'
             }}
         >
-            {props.level.toString(16).padStart(2, '0')}
+            {props.level}
         </Link>
         <Tooltip level={props.level} statistics={props.statistics} />
     </td>

@@ -27,7 +27,7 @@ export function formatTimestamp(timestamp: number): string {
             .padStart(2, '0') +
         '/' +
         date
-            .getDay()
+            .getDate()
             .toString()
             .padStart(2, '0') +
         '/' +
