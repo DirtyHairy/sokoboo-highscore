@@ -21,9 +21,7 @@ const Layout = styled.div({
     flexWrap: 'wrap',
     '&': {
         justifyContent: 'space-evenly'
-    },
-    marginLeft: '1rem',
-    marginRight: '1rem'
+    }
 });
 
 const Message: FunctionComponent<{ message: string }> = ({ message }) => (
@@ -112,9 +110,13 @@ const App: FunctionComponent<Props> = ({ level }) => {
     if (level !== undefined) {
         return (
             <Layout>
-                <Scores css={{ marginRight: '1rem' }} level={level} statistics={levelStatistics[level]} />
+                <Scores
+                    css={{ marginRight: '1rem', marginLeft: '1rem' }}
+                    level={level}
+                    statistics={levelStatistics[level]}
+                />
                 <Matrix
-                    css={{ marginTop: '3em', marginLeft: '1rem' }}
+                    css={{ marginTop: '3em', marginLeft: '1rem', marginRight: '1rem' }}
                     statistics={levelStatistics}
                     selectedLevel={level}
                 />
