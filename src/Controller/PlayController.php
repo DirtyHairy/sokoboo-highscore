@@ -8,18 +8,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/user")
- */
-class UserController extends AbstractController
+class PlayController extends AbstractController
 {
     /**
-     * @Route("/create", name="create-user")
+     * @Route("/play", name="play")
      *
      * @return Response
      */
-    public function newUser(): Response
+    public function play(): Response
     {
-        return $this->render("createuser.html.twig", ["pageid" => "page-login"]);
+        return $this->render("play.html.twig", ["pageid" => "page-play"]);
     }
 }

@@ -34,10 +34,10 @@ const Scores: FunctionComponent<Props> = ({ level, statistics, className }) => {
             >
                 <thead>
                     <tr>
-                        <td css={{ width: '7em' }}> PLACE</td>
+                        <td css={{ width: '7em' }}>PLACE</td>
                         <td css={{ width: '7em' }}>MOVES</td>
                         <td css={{ width: '10em' }}>TIME</td>
-                        <td css={{ width: '13em' }}>DATE</td>
+                        <td css={{ width: '13em', textAlign: 'right' }}>DATE</td>
                         <td css={{ width: '13em', textAlign: 'right' }}>NAME</td>
                     </tr>
                     <tr>
@@ -56,7 +56,7 @@ const Scores: FunctionComponent<Props> = ({ level, statistics, className }) => {
                                         <td>{i + 1}</td>
                                         <td>{h.moves}</td>
                                         <td>{formatSeconds(h.seconds)}</td>
-                                        <td>{formatTimestamp(h.timestamp)}</td>
+                                        <td css={{ textAlign: 'right' }}>{formatTimestamp(h.timestamp)}</td>
                                         <td css={{ width: '13em', textAlign: 'right' }}>{h.nick}</td>
                                     </tr>
                                 );
