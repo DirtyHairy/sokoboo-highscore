@@ -6,15 +6,15 @@ namespace App\Command;
 
 use App\Exception\BadCodeException;
 use App\Service\ScoreCodec;
+use App\Service\ScoreCodecInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class DecodeCode extends Command
+class DecodeCodeCommand extends Command
 {
     const ARGUMENT_CODE = "code";
-
 
     protected static $defaultName = "app:decode-code";
 
@@ -22,16 +22,16 @@ class DecodeCode extends Command
     private $scoreCodec;
 
     /**
-     * DecodeCode constructor.
-     * @param ScoreCodec $scoreCodec
+     * DecodeCodeCommand constructor.
+     * @param ScoreCodecInterface $scoreCodec
      */
-    public function __construct(ScoreCodec $scoreCodec)
+    public function __construct(ScoreCodecInterface $scoreCodec)
     {
         parent::__construct();
         $this->scoreCodec = $scoreCodec;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription("Decode a score code")
@@ -39,12 +39,16 @@ class DecodeCode extends Command
             ->addArgument(self::ARGUMENT_CODE, InputArgument::REQUIRED, "highscore code");
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         try {
             $decodedScore = $this->scoreCodec->decode($input->getArgument(self::ARGUMENT_CODE));
         } catch (BadCodeException $e) {
-            $output->writeln("ERROR: bad code!");
+            $output->writeln("ERROR: bad code: " . $e->getMessage());
             return;
         }
 
