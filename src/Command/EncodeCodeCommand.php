@@ -28,7 +28,7 @@ class EncodeCodeCommand extends Command
         $this->scoreCodec = $scoreCodec;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription("Encode a score code")
             ->setHelp("This command encodes a level, the number of moves and the time played into a score code.")
@@ -37,7 +37,7 @@ class EncodeCodeCommand extends Command
             ->addArgument(self::ARGUMENT_SECONDS, InputArgument::REQUIRED, "time played in seconds");
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln(sprintf("encoded code: %s", $this->scoreCodec->encode(
             new DecodedScore(
