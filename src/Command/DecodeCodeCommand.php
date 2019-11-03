@@ -5,7 +5,6 @@ namespace App\Command;
 
 
 use App\Exception\BadCodeException;
-use App\Service\ScoreCodec;
 use App\Service\ScoreCodecInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,7 +17,7 @@ class DecodeCodeCommand extends Command
 
     protected static $defaultName = "app:decode-code";
 
-    /** @var ScoreCodec */
+    /** @var ScoreCodecInterface */
     private $scoreCodec;
 
     /**

@@ -13,4 +13,6 @@ interface ScoreCodecInterface
      * @throws BadCodeException
      */
     public function decode(string $code): DecodedScore;
+
+    public function encode(DecodedScore $score): string;
 }
