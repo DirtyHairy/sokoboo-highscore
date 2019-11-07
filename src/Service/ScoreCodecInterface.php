@@ -5,6 +5,10 @@ namespace App\Service;
 use App\Exception\BadCodeException;
 use App\Model\DecodedScore;
 
+/**
+ * Interface ScoreCodecInterface
+ * @package App\Service
+ */
 interface ScoreCodecInterface
 {
     /**
@@ -14,5 +18,9 @@ interface ScoreCodecInterface
      */
     public function decode(string $code): DecodedScore;
 
+    /**
+     * @param DecodedScore $score
+     * @return string
+     */
     public function encode(DecodedScore $score): string;
 }

@@ -6,6 +6,10 @@ namespace App\Assets;
 
 use Symfony\Component\Asset\VersionStrategy\VersionStrategyInterface;
 
+/**
+ * Class BuildIdVersionStrategy
+ * @package App\Assets
+ */
 class BuildIdVersionStrategy implements VersionStrategyInterface
 {
     private const BUILD_ID_KEY = "BUILD_ID";

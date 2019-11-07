@@ -3,7 +3,10 @@
 
 namespace App\Model;
 
-
+/**
+ * Class DecodedScore
+ * @package App\Model
+ */
 class DecodedScore
 {
 

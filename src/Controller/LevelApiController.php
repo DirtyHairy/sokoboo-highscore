@@ -4,7 +4,8 @@
 namespace App\Controller;
 
 
-use App\Service\LevelDataProvider;
+use App\Service\ScoreService;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,26 +15,27 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class LevelApiController extends AbstractController
 {
-    /** @var LevelDataProvider */
-    private $levelDataProvider;
+    /** @var ScoreService */
+    private $scoreService;
 
     /**
      * LevelApiController constructor.
-     * @param LevelDataProvider $levelDataProvider
+     * @param ScoreService $levelDataProvider
      */
-    public function __construct(LevelDataProvider $levelDataProvider)
+    public function __construct(ScoreService $levelDataProvider)
     {
-        $this->levelDataProvider = $levelDataProvider;
+        $this->scoreService = $levelDataProvider;
     }
 
     /**
      * @Route("/statistics", name="api-statistics")
      *
      * @return Response
+     * @throws Exception
      */
     public function levelStatistics(): Response
     {
-        return $this->json($this->levelDataProvider->levelStatistics());
+        return $this->json($this->scoreService->levelStatistics());
     }
 
     /**
@@ -41,9 +43,10 @@ class LevelApiController extends AbstractController
      *
      * @param int $level
      * @return Response
+     * @throws Exception
      */
     public function highScoresFoRLevel(int $level): Response
     {
-        return $this->json($this->levelDataProvider->highScoresForLevel($level));
+        return $this->json($this->scoreService->highScoresForLevel($level));
     }
 }

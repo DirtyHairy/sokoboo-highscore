@@ -11,6 +11,10 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class EncodeCodeCommand
+ * @package App\Command
+ */
 class EncodeCodeCommand extends Command
 {
     const ARGUMENT_LEVEL = "level";
@@ -22,6 +26,10 @@ class EncodeCodeCommand extends Command
     /** @var ScoreCodecInterface */
     private $scoreCodec;
 
+    /**
+     * EncodeCodeCommand constructor.
+     * @param ScoreCodecInterface $scoreCodec
+     */
     public function __construct(ScoreCodecInterface $scoreCodec)
     {
         parent::__construct();
@@ -37,6 +45,10 @@ class EncodeCodeCommand extends Command
             ->addArgument(self::ARGUMENT_SECONDS, InputArgument::REQUIRED, "time played in seconds");
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln(sprintf("encoded code: %s", $this->scoreCodec->encode(

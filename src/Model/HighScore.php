@@ -3,7 +3,10 @@
 
 namespace App\Model;
 
-
+/**
+ * Class HighScore
+ * @package App\Model
+ */
 class HighScore
 {
     /** @var string */

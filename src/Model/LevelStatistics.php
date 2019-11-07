@@ -3,7 +3,10 @@
 
 namespace App\Model;
 
-
+/**
+ * Class LevelStatistics
+ * @package App\Model
+ */
 class LevelStatistics
 {
     /**
@@ -47,7 +50,7 @@ class LevelStatistics
     }
 
     /**
-     * @return int
+     * @return HighScore
      */
     public function getBestScore(): HighScore
     {
@@ -55,7 +58,7 @@ class LevelStatistics
     }
 
     /**
-     * @param int $bestScore
+     * @param HighScore $bestScore
      * @return LevelStatistics
      */
     public function setBestScore(HighScore $bestScore): LevelStatistics
