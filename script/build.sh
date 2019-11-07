@@ -29,10 +29,13 @@ DATE=`alternatives date`
 test -x "$DATE" || die "date not available"
 
 TAR=`alternatives gtar tar`
-test -x "$TAR" || "tar not available"
+test -x "$TAR" || die "tar not available"
 
 YARN=`alternatives yarn`
-test -x "$YARN" || "yarn not available"
+test -x "$YARN" || die "yarn not available"
+
+GITCRYPT=`alternatives git-crypt`
+test -x "$GITCRYPT" || die "git-crypt not available"
 
 current_dir=`"$READLINK" $0`
 current_dir=`dirname $0`
@@ -45,6 +48,7 @@ mkdir -p "$build_dir"
 cd "$build_dir"
 
 "$GIT" clone "$REPOSITORY" .
+"$GITCRYPT" unlock
 "$COMPOSER" install
 
 echo "BUILD_ID=$build_id" >> .env
