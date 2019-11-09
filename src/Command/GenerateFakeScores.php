@@ -81,8 +81,6 @@ class GenerateFakeScores extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @throws BadCodeException
-     * @throws DuplicateScoreEntryException
-     * @throws DuplicateScoreEntryException
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
@@ -92,19 +90,23 @@ class GenerateFakeScores extends Command
         /** @var  $progress */
         $progress = new ProgressBar($output);
 
-        $this->generateScores($count, $progress);
+        /** @var int $actualCount */
+        $actualCount = $this->generateScores($count, $progress);
 
-        $output->writeln(sprintf("inserted %s random scores into the database", $count));
+        $output->writeln(sprintf("inserted %s random scores into the database", $actualCount));
     }
 
     /**
      * @param int $count
      * @param ProgressBar $progress
+     * @return int
      * @throws BadCodeException
-     * @throws DuplicateScoreEntryException
      */
-    private function generateScores(int $count, ProgressBar $progress): void
+    private function generateScores(int $count, ProgressBar $progress): int
     {
+        /** @var int $actualCount */
+        $actualCount = 0;
+
         $this->scoreService->setAutoflush(false);
 
         $progress->start($count);
@@ -120,12 +122,18 @@ class GenerateFakeScores extends Command
 
             $nick = self::$nicknames[random_int(0, count(self::$nicknames) - 1)];
 
-            $this->scoreService->registerCode($code, $nick);
+            try {
+                $this->scoreService->registerCode($code, $nick);
+                $actualCount++;
+            } catch (DuplicateScoreEntryException $e) {
+            }
 
             $progress->advance();
         }
 
         $this->entityManager->flush();
         $progress->finish();
+
+        return $actualCount;
     }
 }

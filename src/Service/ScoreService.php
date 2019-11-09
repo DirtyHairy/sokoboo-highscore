@@ -20,6 +20,8 @@ use Exception;
  */
 class ScoreService
 {
+    const NUMBER_LEVELS = 100;
+
     /** @var ScoreCodecInterface */
     private $scoreCodec;
 
@@ -88,21 +90,22 @@ class ScoreService
      */
     public function levelStatistics(): array
     {
-        /** @var LevelStatistics[] $levelStatistics */
-        $levelStatistics = [];
+        /** @var LevelStatistics[] $statistics */
+        $statistics = [];
 
-        for ($i = 0; $i <= 255; $i++) {
-            $highScore = new HighScore(
-                "someplayer",
-                random_int(10, 50),
-                random_int(30, 5400),
-                random_int(0, 50 * 24 * 3600 * 365)
-            );
-
-            $levelStatistics[$i] = new LevelStatistics(max(0, random_int($i * -5, 5 * (600 - $i))), $highScore);
+        for ($i = 0; $i < self::NUMBER_LEVELS; $i++) {
+            $statistics[$i] = new LevelStatistics(0);
         }
 
-        return $levelStatistics;
+        foreach ($this->scoreEntryRepository->getStatistics() as $row) {
+            $statistics[$row["level"]]
+                ->setPlayedCount($row["count"])
+                ->setBestScore(
+                    new HighScore($row["nick"], $row["moves"], $row["seconds"], $row["timestamp"])
+                );
+        }
+
+        return $statistics;
     }
 
     /**

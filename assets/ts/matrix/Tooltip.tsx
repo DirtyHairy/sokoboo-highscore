@@ -38,9 +38,12 @@ const Tooltip: FunctionComponent<Props> = props => (
         <div css={{ marginBottom: '0.5em' }}>
             <i className="player-icon" /> {props.statistics.playedCount}
         </div>
-        <div css={{ marginBottom: '0.5em' }}># {props.statistics.bestScore.moves}</div>
+        <div css={{ marginBottom: '0.5em' }}>
+            # {props.statistics.bestScore ? props.statistics.bestScore.moves : '-'}
+        </div>
         <div>
-            <i className="clock-icon" /> {formatSeconds(props.statistics.bestScore.seconds)}
+            <i className="clock-icon" />{' '}
+            {props.statistics.bestScore ? formatSeconds(props.statistics.bestScore.seconds) : '-'}
         </div>
     </div>
 );

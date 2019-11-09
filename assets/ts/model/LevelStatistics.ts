@@ -2,7 +2,7 @@ import Highscore from './Highscore';
 
 interface LevelStatistics {
     playedCount: number;
-    bestScore: Highscore;
+    bestScore: Highscore | null;
 }
 
 export default LevelStatistics;

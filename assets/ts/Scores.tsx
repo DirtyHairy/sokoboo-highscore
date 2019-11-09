@@ -52,7 +52,7 @@ const Scores: FunctionComponent<Props> = ({ level, statistics, className }) => {
                                 const h = highscores[i];
 
                                 return (
-                                    <tr>
+                                    <tr key={i}>
                                         <td>{i + 1}</td>
                                         <td>{h.moves}</td>
                                         <td>{formatSeconds(h.seconds)}</td>

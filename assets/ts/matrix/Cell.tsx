@@ -17,6 +17,10 @@ export interface Props {
 }
 
 function color(x: number, max: number): string {
+    if (max === 0) {
+        return 'rgb(255,0,0)';
+    }
+
     const r = Math.round(((max - x) / max) * 255);
     const g = Math.round((x / max) * 255);
 

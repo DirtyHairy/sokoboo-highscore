@@ -1,5 +1,6 @@
 .idea
 .user.ini
+php.ini
 /ts-build
 /build
 
