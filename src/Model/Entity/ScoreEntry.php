@@ -4,9 +4,19 @@
 namespace App\Model\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Doctrine\ORM\Mapping\Index;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ScoreEntryRepository")
+ * @ORM\Table(
+ *     uniqueConstraints={@UniqueConstraint(name="code_nick_unqiue", columns={"nick", "code"})},
+ *     indexes={
+ *         @Index(name="level_idx", columns={"level"}),
+ *         @Index(name="nick_idx", columns={"nick"}),
+ *         @index(name="moves_seconds_timestamp_idx", columns={"moves", "seconds", "timestamp"})
+ *     }
+ * )
  */
 class ScoreEntry
 {

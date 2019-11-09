@@ -29,6 +29,9 @@ class ScoreService
     /** @var ScoreEntryRepository */
     private $scoreEntryRepository;
 
+    /** @var bool */
+    private $autoflush = true;
+
     /**
      * ScoreService constructor.
      * @param ScoreCodecInterface $scoreCodec
@@ -72,7 +75,11 @@ class ScoreService
 
         $this->entityManager->persist($entry);
 
-        $this->entityManager->flush();
+        if ($this->autoflush) {
+            if ($this->autoflush) {
+                $this->entityManager->flush();
+            }
+        }
     }
 
     /**
@@ -122,5 +129,13 @@ class ScoreService
         }
 
         return $highScores;
+    }
+
+    /**
+     * @param bool $autoflush
+     */
+    public function setAutoflush(bool $autoflush): void
+    {
+        $this->autoflush = $autoflush;
     }
 }
