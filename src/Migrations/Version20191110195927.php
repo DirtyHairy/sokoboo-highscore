@@ -11,14 +11,14 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191109212228 extends AbstractMigration
+final class Version20191110195927 extends AbstractMigration
 {
     /**
      * @return string
      */
     public function getDescription(): string
     {
-        return '';
+        return 'Create table score_entry';
     }
 
     /**
@@ -30,7 +30,7 @@ final class Version20191109212228 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE score_entry CHANGE ip ip VARCHAR(15) DEFAULT NULL, CHANGE session session VARCHAR(36) DEFAULT NULL');
+        $this->addSql('CREATE TABLE score_entry (id INT AUTO_INCREMENT NOT NULL, level INT NOT NULL, moves INT NOT NULL, seconds INT NOT NULL, nick VARCHAR(20) NOT NULL, code VARCHAR(12) NOT NULL, timestamp INT NOT NULL, ip VARCHAR(15) DEFAULT NULL, session VARCHAR(36) DEFAULT NULL, INDEX level_idx (level), INDEX nick_idx (nick), INDEX moves_seconds_timestamp_idx (moves, seconds, timestamp), UNIQUE INDEX code_nick_unqiue (nick, code), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
     }
 
     /**
@@ -42,6 +42,6 @@ final class Version20191109212228 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE score_entry CHANGE ip ip VARCHAR(15) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`, CHANGE session session VARCHAR(36) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`');
+        $this->addSql('DROP TABLE score_entry');
     }
 }

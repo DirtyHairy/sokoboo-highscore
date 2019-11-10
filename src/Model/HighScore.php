@@ -3,6 +3,8 @@
 
 namespace App\Model;
 
+use App\Model\Entity\ScoreEntry;
+
 /**
  * Class HighScore
  * @package App\Model
@@ -22,6 +24,19 @@ class HighScore
     private $timestamp = 0;
 
     /**
+     * @param ScoreEntry $scoreEntry
+     * @return HighScore
+     */
+    public static function fromScoreEntry(ScoreEntry $scoreEntry): HighScore
+    {
+        return (new HighScore())
+            ->setNick($scoreEntry->getNick())
+            ->setMoves($scoreEntry->getMoves())
+            ->setSeconds($scoreEntry->getSeconds())
+            ->setTimestamp($scoreEntry->getTimestamp());
+    }
+
+    /**
      * @return int
      */
     public function getTimestamp(): int
@@ -37,22 +52,6 @@ class HighScore
     {
         $this->timestamp = $timestamp;
         return $this;
-    }
-
-    /**
-     * HighScore constructor.
-     *
-     * @param string $nick
-     * @param int $moves
-     * @param int $seconds
-     * @param int $timestamp
-     */
-    public function __construct(string $nick, int $moves, int $seconds, int $timestamp)
-    {
-        $this->nick = $nick;
-        $this->moves = $moves;
-        $this->seconds = $seconds;
-        $this->timestamp = $timestamp;
     }
 
     /**

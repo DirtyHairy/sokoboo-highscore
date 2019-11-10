@@ -68,4 +68,24 @@ class ScoreEntryRepository extends ServiceEntityRepository
 
         return $query->getArrayResult();
     }
+
+    /**
+     * @param int $level
+     * @param int $offset
+     * @param int $limit
+     * @return array
+     */
+    public function getSortedScoresByLevel(int $level, int $offset = 0, int $limit = 20): array
+    {
+        return $this->entityManager->createQueryBuilder()
+            ->select("se")
+            ->from("App\Model\Entity\ScoreEntry", "se")
+            ->where("se.level = :level")
+            ->add("orderBy", ["se.moves ASC, se.seconds ASC, se.timestamp ASC"])
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->setParameter("level", $level)
+            ->getResult();
+    }
 }

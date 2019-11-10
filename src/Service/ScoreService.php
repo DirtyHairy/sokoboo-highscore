@@ -101,7 +101,11 @@ class ScoreService
             $statistics[$row["level"]]
                 ->setPlayedCount($row["count"])
                 ->setBestScore(
-                    new HighScore($row["nick"], $row["moves"], $row["seconds"], $row["timestamp"])
+                    (new HighScore())
+                        ->setNick($row["nick"])
+                        ->setMoves($row["moves"])
+                        ->setSeconds($row["seconds"])
+                        ->setTimestamp($row["timestamp"])
                 );
         }
 
@@ -115,23 +119,7 @@ class ScoreService
      */
     public function highScoresForLevel(int $level): array
     {
-        if ($level < 0 || $level > 255) {
-            return [];
-        }
-
-        /** @var HighScore[] $highScores */
-        $highScores = [];
-
-        for ($i = 0; $i < 50; $i++) {
-            $highScores[$i] = new HighScore(
-                sprintf("player%s", $i + 1),
-                random_int(5, 100),
-                random_int(30, 5400),
-                random_int(0, 50 * 24 * 3600 * 365)
-            );
-        }
-
-        return $highScores;
+        return array_map('App\Model\HighScore::fromScoreEntry', $this->scoreEntryRepository->getSortedScoresByLevel($level));
     }
 
     /**

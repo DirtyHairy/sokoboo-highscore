@@ -93,7 +93,7 @@ class GenerateFakeScores extends Command
         /** @var int $actualCount */
         $actualCount = $this->generateScores($count, $progress);
 
-        $output->writeln(sprintf("inserted %s random scores into the database", $actualCount));
+        $output->writeln(sprintf("\n\ninserted %s random scores into the database", $actualCount));
     }
 
     /**
@@ -109,6 +109,9 @@ class GenerateFakeScores extends Command
 
         $this->scoreService->setAutoflush(false);
 
+        /** @var bool[] $codes */
+        $codes = [];
+
         $progress->start($count);
         for ($i = 0; $i < $count; $i++) {
             /** @var string $code */
@@ -119,6 +122,13 @@ class GenerateFakeScores extends Command
                     random_int(3600, 7200)
                 )
             );
+
+            if (!empty($codes[$code])) {
+                $progress->advance();
+                continue;
+            }
+
+            $codes[$code] = true;
 
             $nick = self::$nicknames[random_int(0, count(self::$nicknames) - 1)];
 
