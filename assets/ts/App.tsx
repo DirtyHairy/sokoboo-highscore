@@ -8,12 +8,15 @@ import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 
 import Matrix from './matrix/Matrix';
+import Highscore from './model/Highscore';
 import LevelStatistics from './model/LevelStatistics';
 import Scores from './Scores';
 
 export interface Props {
     level: number | undefined;
 }
+
+const LEVEL_COUNT = 100;
 
 const Layout = styled.div({
     display: 'flex',
@@ -43,16 +46,16 @@ function navigateLevel(level: number | undefined, e: KeyboardEvent): number | un
 
     switch (e.key) {
         case 'ArrowLeft':
-            return level === undefined ? 0 : (level + 255) % 256;
+            return level === undefined ? 0 : (level + LEVEL_COUNT - 1) % LEVEL_COUNT;
 
         case 'ArrowRight':
-            return level === undefined ? 0 : (level + 1) % 256;
+            return level === undefined ? 0 : (level + 1) % LEVEL_COUNT;
 
         case 'ArrowUp':
-            return level === undefined ? 0 : (level + 240) % 256;
+            return level === undefined ? 0 : (level + LEVEL_COUNT - 10) % LEVEL_COUNT;
 
         case 'ArrowDown':
-            return level === undefined ? 0 : (level + 16) % 256;
+            return level === undefined ? 0 : (level + 10) % LEVEL_COUNT;
 
         default:
             return level;
@@ -85,13 +88,19 @@ const App: FunctionComponent<Props> = ({ level }) => {
 
     levelRef.current = level;
 
-    if (level !== undefined && (level < 0 || level > 255)) {
+    if (level !== undefined && (level < 0 || level >= LEVEL_COUNT)) {
         level = undefined;
     }
 
-    const [{ data: levelStatistics, loading, error }] = useAxios<Array<LevelStatistics>>('/api/statistics');
+    const [{ data: levelStatistics, loading: statisticsLoading, error: statisticsError }] = useAxios<
+        Array<LevelStatistics>
+    >('/api/statistics');
 
-    if (loading) {
+    const [{ data: scores, loading: highscoresLoading, error: highscoresError }] = useAxios<Array<Highscore>>(
+        `/api/level/${level === undefined ? 0 : level}/highscore`
+    );
+
+    if (statisticsLoading || highscoresLoading) {
         return (
             <Layout>
                 <Message message="Loading..." />
@@ -99,7 +108,7 @@ const App: FunctionComponent<Props> = ({ level }) => {
         );
     }
 
-    if (error) {
+    if (statisticsError || highscoresError) {
         return (
             <Layout>
                 <Message message="Network error" />
@@ -109,18 +118,23 @@ const App: FunctionComponent<Props> = ({ level }) => {
 
     if (level !== undefined) {
         return (
-            <Layout>
-                <Scores
-                    css={{ marginRight: '1rem', marginLeft: '1rem' }}
-                    level={level}
-                    statistics={levelStatistics[level]}
-                />
+            <div
+                css={{
+                    display: 'flex',
+                    justifyContent: 'space-around',
+                    flexWrap: 'wrap',
+                    '&': {
+                        justifyContent: 'space-evenly'
+                    }
+                }}
+            >
+                <Scores css={{ marginRight: '1rem', marginLeft: '1rem' }} level={level} scores={scores} />
                 <Matrix
-                    css={{ marginTop: '3em', marginLeft: '1rem', marginRight: '1rem' }}
+                    css={{ marginLeft: '1rem', marginRight: '1rem', marginTop: '3em' }}
                     statistics={levelStatistics}
                     selectedLevel={level}
                 />
-            </Layout>
+            </div>
         );
     } else {
         return (

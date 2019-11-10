@@ -13,23 +13,18 @@ const Title = styled.div({ fontFamily: 'ibmconv', textAlign: 'center', marginBot
 
 export interface Props {
     level: number;
-    statistics: LevelStatistics;
+    scores: Array<Highscore>;
     className?: string;
 }
 
-const Scores: FunctionComponent<Props> = ({ level, statistics, className }) => {
-    const [{ data: highscores, loading, error }] = useAxios<Array<Highscore>>(`/api/level/${level}/highscore`);
-
+const Scores: FunctionComponent<Props> = ({ level, scores, className }) => {
     return (
-        <div className={className}>
-            {loading && <Title>Loading...</Title>}
-            {!loading && error && <Title>Network error</Title>}
-            {!loading && !error && <Title>----====≡≡≡≡ LEVEL {level} ≡≡≡≡====----</Title>}
+        <div className={className} css={{ zIndex: 10 }}>
+            <Title>----====≡≡≡≡ LEVEL {level} ≡≡≡≡====----</Title>
             <table
                 css={{
                     fontFamily: 'ibmconv',
-                    textAlign: 'left',
-                    visibility: !loading && !error ? 'visible' : 'hidden'
+                    textAlign: 'left'
                 }}
             >
                 <thead>
@@ -38,31 +33,29 @@ const Scores: FunctionComponent<Props> = ({ level, statistics, className }) => {
                         <td css={{ width: '7em' }}>MOVES</td>
                         <td css={{ width: '10em' }}>TIME</td>
                         <td css={{ width: '13em', textAlign: 'right' }}>DATE</td>
-                        <td css={{ width: '13em', textAlign: 'right' }}>NAME</td>
+                        <td css={{ width: '21em', textAlign: 'right' }}>NAME</td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
                     </tr>
                 </thead>
-                {!loading && !error && (
-                    <tbody css={{ lineHeight: '2em' }}>
-                        {Array(Math.min(10, highscores.length))
-                            .fill(1)
-                            .map((_, i) => {
-                                const h = highscores[i];
+                <tbody css={{ lineHeight: '2em', whiteSpace: 'nowrap' }}>
+                    {Array(Math.min(10, scores.length))
+                        .fill(1)
+                        .map((_, i) => {
+                            const h = scores[i];
 
-                                return (
-                                    <tr key={i}>
-                                        <td>{i + 1}</td>
-                                        <td>{h.moves}</td>
-                                        <td>{formatSeconds(h.seconds)}</td>
-                                        <td css={{ textAlign: 'right' }}>{formatTimestamp(h.timestamp)}</td>
-                                        <td css={{ width: '13em', textAlign: 'right' }}>{h.nick}</td>
-                                    </tr>
-                                );
-                            })}
-                    </tbody>
-                )}
+                            return (
+                                <tr key={i}>
+                                    <td>{i + 1}</td>
+                                    <td>{h.moves}</td>
+                                    <td>{formatSeconds(h.seconds)}</td>
+                                    <td css={{ textAlign: 'right' }}>{formatTimestamp(h.timestamp)}</td>
+                                    <td css={{ width: '13em', textAlign: 'right' }}>{h.nick}</td>
+                                </tr>
+                            );
+                        })}
+                </tbody>
             </table>
         </div>
     );
