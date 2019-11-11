@@ -1,5 +1,26 @@
 {% extends "base.html.twig" %}
+{% import "macros.html.twig" as macros %}
 
 {% block content %}
-    <div style="text-align: center">Add a new score</div>
+    <form id="form-code" action="{{ path("newscore") }}" method="post">
+        <label>
+            Name:
+            <input id="input-name" type="text" autocomplete="off" autocapitalize="off" required
+                   pattern="[a-zA-Z0-9\.\-_ ]*" maxlength="20"/>
+        </label>
+        <label>
+            Code:
+            <input id="input-code" type="text" autocomplete="off" autocapitalize="off" required pattern="[0-9]{12}"
+                   maxlength="12" minlength="12"/>
+        </label>
+        <button type="submit">Register</button>
+    </form>
+{% endblock %}
+
+{% block scriptextra %}
+    {{ macros.scriptextra("register-highscore") }}
+{% endblock %}
+
+{% block stylesextra %}
+    {{ macros.stylesextra("register-highscore") }}
 {% endblock %}

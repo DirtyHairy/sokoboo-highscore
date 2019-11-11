@@ -7,10 +7,12 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore
-// directory where compiled assets will be stored
+    // directory where compiled assets will be stored
     .setOutputPath('public/build/')
     .setPublicPath('/build')
-    .addEntry('highscores', './assets/ts/highscores.tsx')
+    .addEntry('highscore-browser', './assets/ts/highscore-browser/main.tsx')
+    .addEntry('register-highscore', './assets/ts/register-highscore/main.ts')
+    .addEntry('global', './assets/ts/global/main.ts')
     // .splitEntryChunks()
     .disableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
@@ -19,16 +21,14 @@ Encore
     //.enableVersioning(Encore.isProduction())
 
     // enables @babel/preset-env polyfills
-    .configureBabel(() => {
-    }, {
+    .configureBabel(() => {}, {
         useBuiltIns: 'usage',
         corejs: 3
     })
     .enableSassLoader()
-    .enableTypeScriptLoader()
+    .enableTypeScriptLoader();
 
 // uncomment if you use API Platform Admin (composer req api-admin)
 //.enableReactPreset()
-;
 
 module.exports = Encore.getWebpackConfig();

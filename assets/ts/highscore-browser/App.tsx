@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import useAxios from 'axios-hooks';
-import { Fragment, FunctionComponent, useEffect, useMemo, useRef } from 'react';
+import { FunctionComponent, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router';
 
 import { jsx } from '@emotion/core';

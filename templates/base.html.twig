@@ -39,9 +39,11 @@
         }
     </style>
 
-    {% for file in encore_entry_css_files('highscores') %}
+    {% for file in encore_entry_css_files('global') %}
         <link rel="stylesheet" href="{{ asset(file) }}">
     {% endfor %}
+
+    {% block stylesextra %}{% endblock %}
 </head>
 <body>
 
@@ -58,6 +60,8 @@
 </div>
 
 {% block content %}{% endblock %}
+
+{% block scriptextra %}{% endblock %}
 
 </body>
 </html>

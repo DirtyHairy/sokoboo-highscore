@@ -1,0 +1,11 @@
+{% macro scriptextra(artifact) %}
+    {% for file in encore_entry_js_files( artifact ) %}
+        <script src="{{ asset(file) }}" defer></script>
+    {% endfor %}
+{% endmacro %}
+
+{% macro stylesextra(artifact) %}
+    {% for file in encore_entry_css_files( artifact ) %}
+        <link rel="stylesheet" href="{{ asset(file) }}">
+    {% endfor %}
+{% endmacro %}

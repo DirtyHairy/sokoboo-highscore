@@ -1,9 +1,10 @@
 {% extends "base.html.twig" %}
+{% import "macros.html.twig" as macros %}
 
 {% block content %}
     <div id="react-root"></div>
+{% endblock %}
 
-    {% for file in encore_entry_js_files('highscores') %}
-        <script src="{{ asset(file) }}" defer></script>
-    {% endfor %}
+{% block scriptextra %}
+    {{ macros.scriptextra("highscore-browser") }}
 {% endblock %}
