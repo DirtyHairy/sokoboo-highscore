@@ -1,7 +1,7 @@
 #form-code {
   width: 30em;
   margin: auto;
-  margin-top: 8em;
+  margin-top: 6em;
   font-family: ibmconv;
   line-height: 3em;
 
@@ -22,13 +22,14 @@
 
     &, &:focus {
       border: none;
+      border-radius: 0;
       outline: none;
       box-shadow: none;
       border-bottom: 2px solid white;
 
       &:invalid {
-        border-bottom: 2px solid red;
-        color: white
+        background-color: rgba(255, 0, 0, 0.3);
+        box-shadow: 0 0 30px 0 rgba(255, 0, 0, 0.7);
       }
     }
   }
@@ -48,10 +49,21 @@
     box-shadow: #444 0 0 30px 0.5em;
     margin-top: 2em;
     cursor: pointer;
+    margin-left: -0.5em;
 
     &:hover {
       background: darkred;
       box-shadow: darkred 0 0 30px 0.5em;
     }
+  }
+}
+
+.status-message {
+  text-align: center;
+  font-family: ibmconv;
+  margin-top: 5em;
+
+  &.error {
+    color: red;
   }
 }

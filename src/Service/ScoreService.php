@@ -53,10 +53,11 @@ class ScoreService
      * @param string|null $session
      * @param string|null $ip
      *
+     * @return DecodedScore
      * @throws BadCodeException
      * @throws DuplicateScoreEntryException
      */
-    public function registerCode(string $code, string $nick, string $session = null, string $ip = null): void
+    public function registerCode(string $code, string $nick, string $session = null, string $ip = null): DecodedScore
     {
         /** @var  $score DecodedScore */
         $score = $this->scoreCodec->decode($code);
@@ -82,6 +83,8 @@ class ScoreService
                 $this->entityManager->flush();
             }
         }
+
+        return $score;
     }
 
     /**
