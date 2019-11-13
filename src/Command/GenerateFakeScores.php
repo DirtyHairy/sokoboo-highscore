@@ -10,6 +10,7 @@ use App\Model\DecodedScore;
 use App\Service\ScoreCodecInterface;
 use App\Service\ScoreService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -81,6 +82,7 @@ class GenerateFakeScores extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @throws BadCodeException
+     * @throws NonUniqueResultException
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
@@ -101,6 +103,7 @@ class GenerateFakeScores extends Command
      * @param ProgressBar $progress
      * @return int
      * @throws BadCodeException
+     * @throws NonUniqueResultException
      */
     private function generateScores(int $count, ProgressBar $progress): int
     {

@@ -6,13 +6,16 @@ namespace App\Model;
 use App\Model\Entity\ScoreEntry;
 
 /**
- * Class HighScore
+ * Class Highscore
  * @package App\Model
  */
-class HighScore
+class Highscore
 {
     /** @var string */
     private $nick = "";
+
+    /** @var int */
+    private $level = 0;
 
     /** @var int */
     private $moves = 0;
@@ -23,17 +26,21 @@ class HighScore
     /** @var int */
     private $timestamp = 0;
 
+    /** @var int */
+    private $rank = 0;
+
     /**
      * @param ScoreEntry $scoreEntry
-     * @return HighScore
+     * @return Highscore
      */
-    public static function fromScoreEntry(ScoreEntry $scoreEntry): HighScore
+    public static function fromScoreEntry(ScoreEntry $scoreEntry): Highscore
     {
-        return (new HighScore())
+        return (new Highscore())
             ->setNick($scoreEntry->getNick())
             ->setMoves($scoreEntry->getMoves())
             ->setSeconds($scoreEntry->getSeconds())
-            ->setTimestamp($scoreEntry->getTimestamp());
+            ->setTimestamp($scoreEntry->getTimestamp())
+            ->setLevel($scoreEntry->getLevel());
     }
 
     /**
@@ -46,9 +53,9 @@ class HighScore
 
     /**
      * @param int $timestamp
-     * @return HighScore
+     * @return Highscore
      */
-    public function setTimestamp(int $timestamp): HighScore
+    public function setTimestamp(int $timestamp): Highscore
     {
         $this->timestamp = $timestamp;
         return $this;
@@ -64,9 +71,9 @@ class HighScore
 
     /**
      * @param int $seconds
-     * @return HighScore
+     * @return Highscore
      */
-    public function setSeconds(int $seconds): HighScore
+    public function setSeconds(int $seconds): Highscore
     {
         $this->seconds = $seconds;
         return $this;
@@ -82,9 +89,9 @@ class HighScore
 
     /**
      * @param string $nick
-     * @return HighScore
+     * @return Highscore
      */
-    public function setNick(string $nick): HighScore
+    public function setNick(string $nick): Highscore
     {
         $this->nick = $nick;
         return $this;
@@ -100,11 +107,47 @@ class HighScore
 
     /**
      * @param int $moves
-     * @return HighScore
+     * @return Highscore
      */
-    public function setMoves(int $moves): HighScore
+    public function setMoves(int $moves): Highscore
     {
         $this->moves = $moves;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRank(): int
+    {
+        return $this->rank;
+    }
+
+    /**
+     * @param int $rank
+     * @return Highscore
+     */
+    public function setRank(int $rank): Highscore
+    {
+        $this->rank = $rank;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLevel(): int
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param int $level
+     * @return Highscore
+     */
+    public function setLevel(int $level): Highscore
+    {
+        $this->level = $level;
         return $this;
     }
 }

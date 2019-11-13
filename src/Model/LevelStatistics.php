@@ -15,7 +15,7 @@ class LevelStatistics
     private $playedCount = 0;
 
     /**
-     * @var HighScore|null
+     * @var Highscore|null
      */
     private $bestScore;
 
@@ -23,9 +23,9 @@ class LevelStatistics
      * LevelStatistics constructor.
      *
      * @param int $playedCount
-     * @param HighScore $bestScore
+     * @param Highscore $bestScore
      */
-    public function __construct(int $playedCount, HighScore $bestScore = null)
+    public function __construct(int $playedCount, Highscore $bestScore = null)
     {
         $this->playedCount = $playedCount;
         $this->bestScore = $bestScore;
@@ -50,19 +50,19 @@ class LevelStatistics
     }
 
     /**
-     * @return HighScore
+     * @return Highscore
      */
-    public function getBestScore(): ?HighScore
+    public function getBestScore(): ?Highscore
     {
         return $this->bestScore;
     }
 
     /**
-     * @param HighScore $bestScore
+     * @param Highscore $bestScore
      * @return LevelStatistics
      */
     public
-    function setBestScore(?HighScore $bestScore): LevelStatistics
+    function setBestScore(?Highscore $bestScore): LevelStatistics
     {
         $this->bestScore = $bestScore;
         return $this;

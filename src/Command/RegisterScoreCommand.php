@@ -9,6 +9,7 @@ use App\Exception\DuplicateScoreEntryException;
 use App\Model\DecodedScore;
 use App\Service\ScoreCodecInterface;
 use App\Service\ScoreService;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -69,6 +70,7 @@ class RegisterScoreCommand extends Command
      * @return int|void|null
      * @throws BadCodeException
      * @throws DuplicateScoreEntryException
+     * @throws NonUniqueResultException
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {

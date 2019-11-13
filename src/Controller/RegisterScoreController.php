@@ -7,8 +7,9 @@ namespace App\Controller;
 use App\Exception\BadCodeException;
 use App\Exception\DuplicateScoreEntryException;
 use App\Model\CodeSubmission;
-use App\Model\DecodedScore;
+use App\Model\Highscore;
 use App\Service\ScoreService;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,6 +61,7 @@ class RegisterScoreController extends AbstractController
      *
      * @param Request $request
      * @return Response
+     * @throws NonUniqueResultException
      */
     public function newScoreSubmit(Request $request): Response
     {
@@ -108,10 +110,10 @@ class RegisterScoreController extends AbstractController
     }
 
     /**
-     * @param DecodedScore $score
+     * @param Highscore $score
      * @return Response
      */
-    private function renderSuccess(DecodedScore $score): Response
+    private function renderSuccess(Highscore $score): Response
     {
         return $this->render(self::TEMPLATE, ["pageid" => self::PAGEID, self::TPL_SCORE => $score]);
     }

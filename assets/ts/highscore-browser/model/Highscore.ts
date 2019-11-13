@@ -1,4 +1,6 @@
 interface Highscore {
+    level: number;
+    rank: number;
     nick: string;
     moves: number;
     seconds: number;

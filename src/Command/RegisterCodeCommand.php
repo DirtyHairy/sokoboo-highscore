@@ -7,6 +7,7 @@ namespace App\Command;
 use App\Exception\BadCodeException;
 use App\Exception\DuplicateScoreEntryException;
 use App\Service\ScoreService;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -48,6 +49,7 @@ class RegisterCodeCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     * @throws NonUniqueResultException
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {

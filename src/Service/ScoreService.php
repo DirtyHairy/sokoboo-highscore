@@ -8,10 +8,11 @@ use App\Exception\BadCodeException;
 use App\Exception\DuplicateScoreEntryException;
 use App\Model\DecodedScore;
 use App\Model\Entity\ScoreEntry;
-use App\Model\HighScore;
+use App\Model\Highscore;
 use App\Model\LevelStatistics;
 use App\Repository\ScoreEntryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 
 /**
@@ -53,11 +54,12 @@ class ScoreService
      * @param string|null $session
      * @param string|null $ip
      *
-     * @return DecodedScore
+     * @return Highscore
      * @throws BadCodeException
      * @throws DuplicateScoreEntryException
+     * @throws NonUniqueResultException
      */
-    public function registerCode(string $code, string $nick, string $session = null, string $ip = null): DecodedScore
+    public function registerCode(string $code, string $nick, string $session = null, string $ip = null): Highscore
     {
         /** @var  $score DecodedScore */
         $score = $this->scoreCodec->decode($code);
@@ -78,13 +80,15 @@ class ScoreService
 
         $this->entityManager->persist($entry);
 
+        /** @var Highscore $highscore */
+        $highscore = Highscore::fromScoreEntry($entry);
+
         if ($this->autoflush) {
-            if ($this->autoflush) {
-                $this->entityManager->flush();
-            }
+            $this->entityManager->flush();
+            $highscore->setRank($this->scoreEntryRepository->getRank($entry));
         }
 
-        return $score;
+        return $highscore;
     }
 
     /**
@@ -100,15 +104,20 @@ class ScoreService
             $statistics[$i] = new LevelStatistics(0);
         }
 
+        /** @var int $rank */
+        $rank = 1;
+
         foreach ($this->scoreEntryRepository->getStatistics() as $row) {
             $statistics[$row["level"]]
                 ->setPlayedCount(intval($row["count"]))
                 ->setBestScore(
-                    (new HighScore())
+                    (new Highscore())
                         ->setNick($row["nick"])
                         ->setMoves(intval($row["moves"]))
                         ->setSeconds(intval($row["seconds"]))
                         ->setTimestamp(intval($row["timestamp"]))
+                        ->setLevel(intval($row["level"]))
+                        ->setRank($rank++)
                 );
         }
 
@@ -117,12 +126,12 @@ class ScoreService
 
     /**
      * @param int $level
-     * @return HighScore[]
+     * @return Highscore[]
      * @throws Exception
      */
     public function highScoresForLevel(int $level): array
     {
-        return array_map('App\Model\HighScore::fromScoreEntry', $this->scoreEntryRepository->getSortedScoresByLevel($level));
+        return array_map('App\Model\Highscore::fromScoreEntry', $this->scoreEntryRepository->getSortedScoresByLevel($level));
     }
 
     /**

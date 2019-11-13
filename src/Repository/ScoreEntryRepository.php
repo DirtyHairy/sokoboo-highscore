@@ -5,8 +5,10 @@ namespace App\Repository;
 use App\Model\Entity\ScoreEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NativeQuery;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
@@ -63,15 +65,15 @@ class ScoreEntryRepository extends ServiceEntityRepository
         /** @var NativeQuery $query */
         $query = $this->entityManager->createNativeQuery(
             "
-            SELECT
-                level,
-                COUNT(id) `count`,
-                $subqueryMoves moves,
-                $subquerySeconds seconds,
-                $subqueryTimestamp timestamp,
-                $subqueryNick nick
-            FROM score_entry se 
-            GROUP BY level
+                SELECT
+                    level,
+                    COUNT(id) `count`,
+                    $subqueryMoves moves,
+                    $subquerySeconds seconds,
+                    $subqueryTimestamp timestamp,
+                    $subqueryNick nick
+                FROM score_entry se 
+                GROUP BY level
             ",
             $rsm
         );
@@ -89,7 +91,7 @@ class ScoreEntryRepository extends ServiceEntityRepository
     {
         return $this->entityManager->createQueryBuilder()
             ->select("se")
-            ->from("App\Model\Entity\ScoreEntry", "se")
+            ->from("App:ScoreEntry", "se")
             ->where("se.level = :level")
             ->add("orderBy", ["se.moves ASC, se.seconds ASC, se.timestamp ASC"])
             ->setFirstResult($offset)
@@ -97,5 +99,31 @@ class ScoreEntryRepository extends ServiceEntityRepository
             ->getQuery()
             ->setParameter("level", $level)
             ->getResult();
+    }
+
+    /**
+     * @param ScoreEntry $scoreEntry
+     * @return int
+     * @throws NonUniqueResultException
+     */
+    public function getRank(ScoreEntry $scoreEntry): int
+    {
+        $result = $this->entityManager->createQueryBuilder()
+            ->select("COUNT(se)")
+            ->from("App:ScoreEntry", "se")
+            ->where("se.moves <= :moves")
+            ->andWhere("se.seconds <= :seconds")
+            ->andWhere("se.timestamp <= :timestamp")
+            ->andWhere("se.level = :level")
+            ->setParameters([
+                "moves" => $scoreEntry->getMoves(),
+                "seconds" => $scoreEntry->getSeconds(),
+                "timestamp" => $scoreEntry->getTimestamp(),
+                "level" => $scoreEntry->getLevel()
+            ])
+            ->getQuery()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
+
+        return intval($result);
     }
 }
