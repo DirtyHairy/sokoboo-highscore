@@ -24,7 +24,10 @@
 
     {% if score is defined %}
         <div class="status-message">
-            Level: {{ score.level }}, Moves: {{ score.moves }}, Time: {{ score.seconds }}, Rank: {{ score.rank }}
+            Level: {{ score.level }},
+            Moves: {{ score.moves }},
+            Time: {{ score.seconds | level_time }},
+            Rank: {{ score.rank }}
         </div>
     {% endif %}
 {% endblock %}

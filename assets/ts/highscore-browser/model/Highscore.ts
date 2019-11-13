@@ -9,10 +9,10 @@ interface Highscore {
 
 export function formatSeconds(seconds: number): string {
     const hours = Math.floor(seconds / 3600);
-    seconds -= hours * 3600;
+    seconds %= 3600;
 
     const minutes = Math.floor(seconds / 60);
-    seconds -= minutes * 60;
+    seconds %= 60;
 
     const pad = (x: number): string => x.toString().padStart(2, '0');
 
