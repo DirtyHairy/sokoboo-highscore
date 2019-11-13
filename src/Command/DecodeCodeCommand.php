@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 
 namespace App\Command;
@@ -48,8 +48,11 @@ class DecodeCodeCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
+        /** @var string $code */
+        $code = $input->getArgument(self::ARGUMENT_CODE);
+
         try {
-            $decodedScore = $this->scoreCodec->decode($input->getArgument(self::ARGUMENT_CODE));
+            $decodedScore = $this->scoreCodec->decode($code);
         } catch (BadCodeException $e) {
             $output->writeln("ERROR: bad code: " . $e->getMessage());
             return;

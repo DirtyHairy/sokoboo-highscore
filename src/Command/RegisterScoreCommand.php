@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 
 namespace App\Command;
@@ -72,14 +72,14 @@ class RegisterScoreCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        /** @var string $level */
-        $level = $input->getArgument(self::ARGUMENT_LEVEL);
+        /** @var int $level */
+        $level = intval($input->getArgument(self::ARGUMENT_LEVEL));
 
-        /** @var string $moves */
-        $moves = $input->getArgument(self::ARGUMENT_MOVES);
+        /** @var int $moves */
+        $moves = intval($input->getArgument(self::ARGUMENT_MOVES));
 
-        /** @var string $seconds */
-        $seconds = $input->getArgument(self::ARGUMENT_SECONDS);
+        /** @var int $seconds */
+        $seconds = intval($input->getArgument(self::ARGUMENT_SECONDS));
 
         /** @var string $nick */
         $nick = $input->getArgument(self::ARGUMENT_NICK);

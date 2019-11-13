@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 
 namespace App\Command;
@@ -84,8 +84,8 @@ class GenerateFakeScores extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        /** @var string $count */
-        $count = $input->getArgument(self::ARGUMENT_COUNT);
+        /** @var int $count */
+        intval($count = $input->getArgument(self::ARGUMENT_COUNT));
 
         /** @var  $progress */
         $progress = new ProgressBar($output);

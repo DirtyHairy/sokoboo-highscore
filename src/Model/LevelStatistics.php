@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 
 namespace App\Model;
@@ -17,7 +17,7 @@ class LevelStatistics
     /**
      * @var HighScore|null
      */
-    private $bestScore = null;
+    private $bestScore;
 
     /**
      * LevelStatistics constructor.

@@ -4,7 +4,7 @@ type MessageMap = {
     [key in keyof ValidityState]?: string;
 };
 
-const NAME_INPUT_ID = 'input-name';
+const NICK_INPUT_ID = 'input-nick';
 const CODE_INPUT_ID = 'input-code';
 
 function handleValidation(target: HTMLInputElement, messages: MessageMap): void {
@@ -33,7 +33,7 @@ function handleValidation(target: HTMLInputElement, messages: MessageMap): void 
 }
 
 window.addEventListener('load', () => {
-    handleValidation(document.getElementById(NAME_INPUT_ID) as HTMLInputElement, {
+    handleValidation(document.getElementById(NICK_INPUT_ID) as HTMLInputElement, {
         tooLong: 'The name must not be longer than 20 characters.',
         valueMissing: 'A name is required.',
         patternMismatch: 'The name may only contain letters, numbers, spaces and dashes.'

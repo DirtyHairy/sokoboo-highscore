@@ -71,13 +71,13 @@ class ScoreEntry
      *
      * @ORM\Column(type="string", length=15, nullable=true)
      */
-    private $ip = null;
+    private $ip;
 
     /** @var string|null
      *
      * @ORM\Column(type="string", length=36, nullable=true)
      */
-    private $session = null;
+    private $session;
 
     /**
      * @return int

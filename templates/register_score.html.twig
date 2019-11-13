@@ -2,25 +2,27 @@
 {% import "macros.html.twig" as macros %}
 
 {% block content %}
-    <form id="form-code" action="{{ path("newscore") }}" method="post">
+    <form id="form-code" action="{{ path("register-score-submit") }}" method="post">
         <label>
             Name:
-            <input id="input-name" type="text" autocomplete="off" autocapitalize="off" name="name" required
-                   value="{{ name }}" pattern="[a-zA-Z0-9\.\-_ ]*" maxlength="20"/>
+            <input id="input-nick" type="text" autocomplete="off" autocapitalize="off" name="nick" required
+                   value="{{ (submission is defined) ? submission.nick : "" }}" pattern="[a-zA-Z0-9\.\-_ ]*"
+                   maxlength="20"/>
         </label>
         <label>
             Code:
             <input id="input-code" type="text" autocomplete="off" autocapitalize="off" name="code" required
-                   value="{{ code }}" pattern="[0-9]{12}" maxlength="12" minlength="12"/>
+                   value="{{ (submission is defined) ? submission.code : "" }}" pattern="[0-9]{12}" maxlength="12"
+                   minlength="12"/>
         </label>
         <button type="submit">Register</button>
     </form>
 
-    {% if error is not empty %}
+    {% if error is defined %}
         <div class="status-message error">!!! {{ error }} !!!</div>
     {% endif %}
 
-    {% if score is not empty %}
+    {% if score is defined %}
         <div class="status-message">
             Level: {{ score.level }}, Moves: {{ score.moves }}, Time: {{ score.seconds }}
         </div>

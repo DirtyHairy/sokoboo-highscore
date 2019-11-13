@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Repository;
 
@@ -32,7 +32,7 @@ class ScoreEntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getStatistics(): array
     {
@@ -62,7 +62,17 @@ class ScoreEntryRepository extends ServiceEntityRepository
 
         /** @var NativeQuery $query */
         $query = $this->entityManager->createNativeQuery(
-            "SELECT level, COUNT(id) `count`, $subqueryMoves moves, $subquerySeconds seconds, $subqueryTimestamp timestamp, $subqueryNick nick FROM score_entry se GROUP BY level",
+            "
+            SELECT
+                level,
+                COUNT(id) `count`,
+                $subqueryMoves moves,
+                $subquerySeconds seconds,
+                $subqueryTimestamp timestamp,
+                $subqueryNick nick
+            FROM score_entry se 
+            GROUP BY level
+            ",
             $rsm
         );
 

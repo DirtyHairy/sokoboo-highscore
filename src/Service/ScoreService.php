@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 
 namespace App\Service;
@@ -102,13 +102,13 @@ class ScoreService
 
         foreach ($this->scoreEntryRepository->getStatistics() as $row) {
             $statistics[$row["level"]]
-                ->setPlayedCount($row["count"])
+                ->setPlayedCount(intval($row["count"]))
                 ->setBestScore(
                     (new HighScore())
                         ->setNick($row["nick"])
-                        ->setMoves($row["moves"])
-                        ->setSeconds($row["seconds"])
-                        ->setTimestamp($row["timestamp"])
+                        ->setMoves(intval($row["moves"]))
+                        ->setSeconds(intval($row["seconds"]))
+                        ->setTimestamp(intval($row["timestamp"]))
                 );
         }
 

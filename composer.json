@@ -6,6 +6,7 @@
         "ext-bcmath": "^7.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/annotations": "^1.8",
         "sensio/framework-extra-bundle": "^5.4",
         "symfony/asset": "4.3.*",
         "symfony/console": "4.3.*",
@@ -16,6 +17,7 @@
         "symfony/property-access": "4.3.*",
         "symfony/serializer": "4.3.*",
         "symfony/twig-bundle": "4.3.*",
+        "symfony/validator": "4.3.*",
         "symfony/webpack-encore-bundle": "^1.6",
         "symfony/yaml": "4.3.*"
     },

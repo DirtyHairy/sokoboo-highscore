@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 
 namespace App\Command;
@@ -51,12 +51,17 @@ class EncodeCodeCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
+        /** @var int $level */
+        $level = intval($input->getArgument(self::ARGUMENT_LEVEL));
+
+        /** @var int $moves */
+        $moves = intval($input->getArgument(self::ARGUMENT_MOVES));
+
+        /** @var int $seconds */
+        $seconds = intval($input->getArgument(self::ARGUMENT_SECONDS));
+
         $output->writeln(sprintf("encoded code: %s", $this->scoreCodec->encode(
-            new DecodedScore(
-                $input->getArgument(self::ARGUMENT_LEVEL),
-                $input->getArgument(self::ARGUMENT_MOVES),
-                $input->getArgument(self::ARGUMENT_SECONDS)
-            )
+            new DecodedScore($level, $moves, $seconds)
         )));
     }
 }
