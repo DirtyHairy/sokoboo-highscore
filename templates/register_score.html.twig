@@ -29,6 +29,8 @@
             Time: {{ score.seconds | level_time }},
             Rank: {{ score.rank }}
         </div>
+
+        <div id="react-root" data-level="{{ score.level }}" data-rank="{{ score.rank }}"></div>
     {% endif %}
 {% endblock %}
 

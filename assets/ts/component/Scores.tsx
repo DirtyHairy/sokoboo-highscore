@@ -28,10 +28,11 @@ const Title: FunctionComponent<{ level: number }> = ({ level }) => (
 
 export interface Props {
     level: number;
+    highlightRank?: number;
     className?: string;
 }
 
-const Scores: FunctionComponent<Props> = ({ level, className }) => {
+const Scores: FunctionComponent<Props> = ({ level, highlightRank: highlightScore, className }) => {
     const [{ data: scores, loading: scoresLoading, error: loadError }] = useAxios<Array<Highscore>>(
         `/api/level/${level === undefined ? 0 : level}/highscore`
     );
@@ -75,7 +76,7 @@ const Scores: FunctionComponent<Props> = ({ level, className }) => {
                             const h = scores[i];
 
                             return (
-                                <tr key={i}>
+                                <tr key={i} css={highlightScore === i + 1 ? { color: 'red' } : undefined}>
                                     <td>{i + 1}</td>
                                     <td>{h ? h.moves : '.'.repeat(6)}</td>
                                     <td>{h ? formatSeconds(h.seconds) : '.'.repeat(8)}</td>

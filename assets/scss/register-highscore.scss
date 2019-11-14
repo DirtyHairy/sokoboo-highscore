@@ -61,9 +61,12 @@
 .status-message {
   text-align: center;
   font-family: ibmconv;
-  margin-top: 5em;
+  margin: 3em;
+  background: #222;
+  line-height: 2em;
 
   &.error {
     color: red;
+    background: none;
   }
 }
