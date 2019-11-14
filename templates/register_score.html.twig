@@ -6,7 +6,7 @@
         <label>
             Name:
             <input id="input-nick" type="text" autocomplete="off" autocapitalize="off" name="nick" required
-                   value="{{ (submission is defined) ? submission.nick : "" }}" pattern="[a-zA-Z0-9\.\-_ ]*"
+                   value="{{ (nick is defined and nick is not empty) ? nick : "" }}" pattern="[a-zA-Z0-9\.\-_ ]*"
                    maxlength="20"/>
         </label>
         <label>

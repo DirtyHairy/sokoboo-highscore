@@ -23,4 +23,9 @@ services:
     resource: '../src/Controller'
     tags: ['controller.service_arguments']
 
+  Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
+    arguments:
+      - !service { class: PDO, factory: ['@database_connection', 'getWrappedConnection'] }
+      - { db_table: 'session', lock_mode: 1 }
+
   App\Service\ScoreCodecInterface: '@App\Service\ScoreCodec'

@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Constants\SessionHandling;
 use App\Exception\BadCodeException;
 use App\Exception\DuplicateScoreEntryException;
 use App\Model\CodeSubmission;
@@ -13,7 +14,9 @@ use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -28,6 +31,7 @@ class RegisterScoreController extends AbstractController
     const TPL_ERROR = "error";
     const TPL_SCORE = "score";
     const TPL_SUBMISSION = "submission";
+    const TPL_NICK = "nick";
 
     /** @var ScoreService */
     private $scoreService;
@@ -49,11 +53,17 @@ class RegisterScoreController extends AbstractController
     /**
      * @Route("/new-score", name="register-score", methods={"GET"})
      *
+     * @param Request $request
      * @return Response
      */
-    public function newScore(): Response
+    public function newScore(Request $request): Response
     {
-        return $this->render(self::TEMPLATE, ["pageid" => self::PAGEID]);
+        return $this->render(self::TEMPLATE,
+            [
+                "pageid" => self::PAGEID,
+                self::TPL_NICK => $request->getSession()->get(SessionHandling::SESSION_VARIABLE_NICK)
+            ]
+        );
     }
 
     /**
@@ -65,11 +75,22 @@ class RegisterScoreController extends AbstractController
      */
     public function newScoreSubmit(Request $request): Response
     {
+        /** @var SessionInterface $session */
+        $session = $request->getSession();
+
+        if (!$session->get(SessionHandling::SESSION_VARIABLE_AUTHORIZED)) {
+            return $this->renderForbidden();
+        }
+
         /** @var CodeSubmission $submission */
         $submission = CodeSubmission::fromPost($request);
 
         /** @var ConstraintViolationListInterface $validations */
         $violations = $this->validator->validate($submission);
+
+        if ($this->isNickValid($violations)) {
+            $session->set(SessionHandling::SESSION_VARIABLE_NICK, $submission->getNick());
+        }
 
         if (count($violations) > 0) {
             return $this->renderError($violations->get(0)->getMessage(), $submission);
@@ -79,11 +100,13 @@ class RegisterScoreController extends AbstractController
             $score = $this->scoreService->registerCode(
                 $submission->getCode(),
                 $submission->getNick(),
-                null,
+                $session->get(SessionHandling::SESSION_VARIABLE_ID),
                 $request->getClientIp()
             );
 
-            return $this->renderSuccess($score);
+            $session->migrate(true);
+
+            return $this->renderSuccess($score, $submission);
 
         } catch (BadCodeException $e) {
             return $this->renderError("Invalid Code", $submission);
@@ -97,6 +120,23 @@ class RegisterScoreController extends AbstractController
     }
 
     /**
+     * @param ConstraintViolationListInterface $violations
+     * @return bool
+     */
+    private function isNickValid(ConstraintViolationListInterface $violations): bool
+    {
+        foreach ($violations as $violation) {
+            /** @var ConstraintViolation $violation */
+
+            if ($violation->getPropertyPath() == "nick") {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @param string $error
      * @param CodeSubmission $submission
      * @return Response
@@ -105,16 +145,38 @@ class RegisterScoreController extends AbstractController
     {
         return $this->render(
             self::TEMPLATE,
-            ["pageid" => self::PAGEID, self::TPL_ERROR => $error, self::TPL_SUBMISSION => $submission]
+            [
+                "pageid" => self::PAGEID,
+                self::TPL_ERROR => $error,
+                self::TPL_SUBMISSION => $submission,
+                self::TPL_NICK => $submission->getNick()
+            ]
         );
     }
 
     /**
      * @param Highscore $score
+     * @param CodeSubmission $submission
      * @return Response
      */
-    private function renderSuccess(Highscore $score): Response
+    private function renderSuccess(Highscore $score, CodeSubmission $submission): Response
     {
-        return $this->render(self::TEMPLATE, ["pageid" => self::PAGEID, self::TPL_SCORE => $score]);
+        return $this->render(self::TEMPLATE,
+            [
+                "pageid" => self::PAGEID,
+                self::TPL_SCORE => $score,
+                self::TPL_NICK => $submission->getNick()
+            ]
+        );
+    }
+
+    /**
+     * @return Response
+     */
+    private function renderForbidden(): Response
+    {
+        return $this
+            ->render("forbidden.html.twig", ["pageid" => self::PAGEID])
+            ->setStatusCode(Response::HTTP_FORBIDDEN);
     }
 }

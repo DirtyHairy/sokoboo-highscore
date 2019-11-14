@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 
 namespace App\Twig;
@@ -36,6 +36,7 @@ class FormatExtension extends AbstractExtension
         $minutes = str_pad(strval(intdiv($seconds, 60)), 2, "0", STR_PAD_LEFT);
         $seconds %= 60;
 
+        /** @var int $remainingSeconds */
         $remainingSeconds = str_pad(strval($seconds), 2, "0", STR_PAD_LEFT);
 
         return $hours == "00" ? ($minutes . ":" . $remainingSeconds) : ($hours . ":" . $minutes . ":" . $remainingSeconds);
