@@ -5,7 +5,7 @@ import { Fragment, FunctionComponent } from 'react';
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 
-import LevelStatistics from '../model/LevelStatistics';
+import LevelStatistics from '../../model/LevelStatistics';
 import Cell from './Cell';
 import { BORDER, NARROW, WIDE } from './definitions';
 import EmptyCell from './EmptyCell';

@@ -7,10 +7,9 @@ import { useHistory } from 'react-router';
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 
+import Scores from '../component/Scores';
+import LevelStatistics from '../model/LevelStatistics';
 import Matrix from './matrix/Matrix';
-import Highscore from './model/Highscore';
-import LevelStatistics from './model/LevelStatistics';
-import Scores from './Scores';
 
 export interface Props {
     level: number | undefined;
@@ -32,7 +31,7 @@ const Message: FunctionComponent<{ message: string }> = ({ message }) => (
         css={{
             fontFamily: 'ibmconv',
             display: 'inline-block',
-            marginTop: '15em'
+            marginTop: '6em'
         }}
     >
         {message}
@@ -96,11 +95,7 @@ const App: FunctionComponent<Props> = ({ level }) => {
         Array<LevelStatistics>
     >('/api/statistics');
 
-    const [{ data: scores, loading: highscoresLoading, error: highscoresError }] = useAxios<Array<Highscore>>(
-        `/api/level/${level === undefined ? 0 : level}/highscore`
-    );
-
-    if (statisticsLoading || highscoresLoading) {
+    if (statisticsLoading) {
         return (
             <Layout>
                 <Message message="Loading..." />
@@ -108,7 +103,7 @@ const App: FunctionComponent<Props> = ({ level }) => {
         );
     }
 
-    if (statisticsError || highscoresError) {
+    if (statisticsError) {
         return (
             <Layout>
                 <Message message="Network error" />
@@ -128,7 +123,7 @@ const App: FunctionComponent<Props> = ({ level }) => {
                     }
                 }}
             >
-                <Scores css={{ marginRight: '1rem', marginLeft: '1rem' }} level={level} scores={scores} />
+                <Scores css={{ marginRight: '1rem', marginLeft: '1rem' }} level={level} />
                 <Matrix
                     css={{ marginLeft: '1rem', marginRight: '1rem', marginTop: '3em' }}
                     statistics={levelStatistics}

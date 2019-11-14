@@ -18,11 +18,12 @@
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
     "noImplicitReturns": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "outDir": "./ts-build"
-  }
+  },
+  "include": ["assets/**/*.ts"]
 }

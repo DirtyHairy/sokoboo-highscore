@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { jsx } from '@emotion/core';
 
-import LevelStatistics from '../model/LevelStatistics';
+import LevelStatistics from '../../model/LevelStatistics';
 import { BORDER, IS_FIREFOX, WIDE } from './definitions';
 import Tooltip from './Tooltip';
 

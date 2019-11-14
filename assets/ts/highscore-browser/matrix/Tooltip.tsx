@@ -4,8 +4,8 @@ import { FunctionComponent } from 'react';
 
 import { jsx } from '@emotion/core';
 
-import { formatSeconds } from '../model/Highscore';
-import LevelStatistics from '../model/LevelStatistics';
+import { formatSeconds } from '../../model/Highscore';
+import LevelStatistics from '../../model/LevelStatistics';
 import { WIDE } from './definitions';
 
 export interface Props {
