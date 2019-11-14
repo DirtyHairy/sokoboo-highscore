@@ -96,6 +96,8 @@ class RegisterScoreController extends AbstractController
             return $this->renderError($violations->get(0)->getMessage(), $submission);
         }
 
+        $session->migrate(true);
+
         try {
             $score = $this->scoreService->registerCode(
                 $submission->getCode(),
@@ -103,8 +105,6 @@ class RegisterScoreController extends AbstractController
                 $session->get(SessionHandling::SESSION_VARIABLE_ID),
                 $request->getClientIp()
             );
-
-            $session->migrate(true);
 
             return $this->renderSuccess($score, $submission);
 
