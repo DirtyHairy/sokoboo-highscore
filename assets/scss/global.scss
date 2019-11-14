@@ -6,6 +6,25 @@ html {
   font-size: 16px;
 }
 
+.player-icon, .clock-icon {
+  background-size: contain;
+  display: inline-block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.player-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: bottom;
+}
+
+.clock-icon {
+  width: 11px;
+  height: 11px;
+  vertical-align: center;
+}
+
 #sokoboo-logo {
   height: 160px;
   margin: auto;
