@@ -1,11 +1,10 @@
 /** @jsx jsx */
 
 import useAxios from 'axios-hooks';
-import { FunctionComponent, useEffect, useMemo, useRef } from 'react';
+import { Fragment, FunctionComponent, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router';
 
 import { jsx } from '@emotion/core';
-import styled from '@emotion/styled';
 
 import Scores from '../component/Scores';
 import LevelStatistics from '../model/LevelStatistics';
@@ -17,24 +16,16 @@ export interface Props {
 
 const LEVEL_COUNT = 100;
 
-const Layout = styled.div({
-    display: 'flex',
-    justifyContent: 'space-around',
-    flexWrap: 'wrap',
-    '&': {
-        justifyContent: 'space-evenly'
-    }
-});
-
 const Message: FunctionComponent<{ message: string }> = ({ message }) => (
-    <span
+    <div
         css={{
-            display: 'inline-block',
-            marginTop: '6em'
+            display: 'block',
+            marginTop: '6em',
+            textAlign: 'center'
         }}
     >
         {message}
-    </span>
+    </div>
 );
 
 function navigateLevel(level: number | undefined, e: KeyboardEvent): number | undefined {
@@ -68,6 +59,10 @@ const App: FunctionComponent<Props> = ({ level }) => {
         const handler = (e: KeyboardEvent) => {
             const newLevel = navigateLevel(levelRef.current, e);
 
+            if (levelRef.current === undefined) {
+                return;
+            }
+
             if (newLevel === levelRef.current) {
                 return;
             }
@@ -84,6 +79,33 @@ const App: FunctionComponent<Props> = ({ level }) => {
 
     useEffect(() => () => window.removeEventListener('keydown', keydownHandler), []);
 
+    const pageLinkHandler = useMemo(() => {
+        const handler = (e: MouseEvent) => {
+            e.preventDefault();
+
+            history.push('/highscores');
+        };
+
+        const a: HTMLAnchorElement | null = document.querySelector('a.navigation-highscores');
+
+        if (a) {
+            a.addEventListener('click', handler);
+        }
+
+        return handler;
+    }, []);
+
+    useEffect(
+        () => () => {
+            const a: HTMLAnchorElement | null = document.querySelector('a.navigation-highscores');
+
+            if (a) {
+                a.removeEventListener('click', pageLinkHandler);
+            }
+        },
+        []
+    );
+
     levelRef.current = level;
 
     if (level !== undefined && (level < 0 || level >= LEVEL_COUNT)) {
@@ -95,46 +117,31 @@ const App: FunctionComponent<Props> = ({ level }) => {
     >('/api/statistics');
 
     if (statisticsLoading) {
-        return (
-            <Layout>
-                <Message message="Loading..." />
-            </Layout>
-        );
+        return <Message message="Loading..." />;
     }
 
     if (statisticsError) {
-        return (
-            <Layout>
-                <Message message="Network error" />
-            </Layout>
-        );
+        return <Message message="Network error" />;
     }
 
     if (level !== undefined) {
         return (
-            <div
-                css={{
-                    display: 'flex',
-                    justifyContent: 'space-around',
-                    flexWrap: 'wrap',
-                    '&': {
-                        justifyContent: 'space-evenly'
-                    }
-                }}
-            >
-                <Scores css={{ marginRight: '1rem', marginLeft: '1rem' }} level={level} />
+            <Fragment>
+                <Scores css={{ margin: 'auto' }} level={level} />
                 <Matrix
-                    css={{ marginLeft: '1rem', marginRight: '1rem', marginTop: '3em' }}
+                    css={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '4em' }}
                     statistics={levelStatistics}
                     selectedLevel={level}
                 />
-            </div>
+            </Fragment>
         );
     } else {
         return (
-            <Layout>
-                <Matrix css={{ margin: 'auto' }} statistics={levelStatistics} selectedLevel={level} />
-            </Layout>
+            <Matrix
+                css={{ margin: 'auto', transform: 'scale(1.5)', transformOrigin: 'top center' }}
+                statistics={levelStatistics}
+                selectedLevel={level}
+            />
         );
     }
 };
