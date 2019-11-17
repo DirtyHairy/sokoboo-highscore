@@ -127,11 +127,11 @@ const App: FunctionComponent<Props> = ({ level }) => {
     if (level !== undefined) {
         return (
             <Fragment>
-                <Scores css={{ margin: 'auto' }} level={level} />
-                <Matrix
-                    css={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '4em', marginBottom: '3em' }}
-                    statistics={levelStatistics}
-                    selectedLevel={level}
+                <Scores
+                    css={{ margin: 'auto', marginBottom: '3em' }}
+                    level={level}
+                    onPreviousLevel={() => history.push(`/highscores/${(level! + LEVEL_COUNT - 1) % LEVEL_COUNT}`)}
+                    onNextLevel={() => history.push(`/highscores/${(level! + LEVEL_COUNT + 1) % LEVEL_COUNT}`)}
                 />
             </Fragment>
         );

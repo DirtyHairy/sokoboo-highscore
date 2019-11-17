@@ -16,14 +16,36 @@ const Container = styled.div({
     alignItems: 'center'
 });
 
+const ChangeLevel = styled.a({
+    fontFamily: 'ibmconv',
+    color: 'white',
+    textDecoration: 'none',
+    '&:visited': { color: 'white', textDecoration: 'none' }
+});
+
 const Message = styled.div({ textAlign: 'center' });
 
-const Title: FunctionComponent<{ level: number }> = ({ level }) => (
+const Title: FunctionComponent<{ level: number; onNextLevel?: () => void; onPreviousLevel?: () => void }> = ({
+    level,
+    onNextLevel,
+    onPreviousLevel
+}) => (
     <div css={{ textAlign: 'center', marginBottom: '1em', lineHeight: '2em' }}>
         Leader Board <br />
-        <span css={{ fontFamily: 'ibmconv' }}>----====≡≡≡≡</span> LEVEL{' '}
-        <div css={{ display: 'inline-block', width: '2em', textAlign: 'right' }}>{level}</div>{' '}
-        <span css={{ fontFamily: 'ibmconv' }}>≡≡≡≡====----</span>
+        <ChangeLevel
+            href={onPreviousLevel ? '#' : undefined}
+            onClick={onPreviousLevel ? e => (e.preventDefault(), onPreviousLevel()) : undefined}
+        >
+            ----====≡≡≡≡
+        </ChangeLevel>{' '}
+        LEVEL <div css={{ display: 'inline-block', width: '2em', textAlign: 'right' }}>{level}</div>{' '}
+        <ChangeLevel
+            href={onNextLevel ? '#' : undefined}
+            onClick={onNextLevel ? e => (e.preventDefault(), onNextLevel()) : undefined}
+            css={{ fontFamily: 'ibmconv' }}
+        >
+            ≡≡≡≡====----
+        </ChangeLevel>
     </div>
 );
 
@@ -31,25 +53,27 @@ export interface Props {
     level: number;
     highlightRank?: number;
     className?: string;
+    onPreviousLevel?: () => void;
+    onNextLevel?: () => void;
 }
 
-const Scores: FunctionComponent<Props> = ({ level, highlightRank: highlightScore, className }) => {
+const Scores: FunctionComponent<Props> = props => {
     const [{ data: scores, loading: scoresLoading, error: loadError }] = useAxios<Array<Highscore>>(
-        `/api/level/${level === undefined ? 0 : level}/highscore`
+        `/api/level/${props.level === undefined ? 0 : props.level}/highscore`
     );
 
     if (scoresLoading || loadError) {
         return (
-            <Container className={className}>
-                <Title level={level} />
+            <Container className={props.className}>
+                <Title level={props.level} onPreviousLevel={props.onPreviousLevel} onNextLevel={props.onNextLevel} />
                 <Message>{scoresLoading ? 'Loading...' : 'Network error'}</Message>
             </Container>
         );
     }
 
     return (
-        <Container className={className}>
-            <Title level={level} />
+        <Container className={props.className}>
+            <Title level={props.level} onPreviousLevel={props.onPreviousLevel} onNextLevel={props.onNextLevel} />
             <table
                 css={{
                     textAlign: 'center',
@@ -74,7 +98,7 @@ const Scores: FunctionComponent<Props> = ({ level, highlightRank: highlightScore
                             const h = scores[i];
 
                             return (
-                                <tr key={i} css={highlightScore === i + 1 ? { color: 'red' } : undefined}>
+                                <tr key={i} css={props.highlightRank === i + 1 ? { color: 'red' } : undefined}>
                                     <td css={{ textAlign: 'right', color: 'red', width: '3em' }}>{i + 1}</td>
                                     <td css={{ width: '21em' }}>{h ? h.nick : '.'.repeat(20)}</td>
                                     <td>{h ? h.moves : '.'.repeat(7)}</td>
