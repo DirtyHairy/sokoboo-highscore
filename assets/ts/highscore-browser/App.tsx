@@ -129,7 +129,7 @@ const App: FunctionComponent<Props> = ({ level }) => {
             <Fragment>
                 <Scores css={{ margin: 'auto' }} level={level} />
                 <Matrix
-                    css={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '4em' }}
+                    css={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '4em', marginBottom: '3em' }}
                     statistics={levelStatistics}
                     selectedLevel={level}
                 />
@@ -138,7 +138,7 @@ const App: FunctionComponent<Props> = ({ level }) => {
     } else {
         return (
             <Matrix
-                css={{ margin: 'auto', transform: 'scale(1.5)', transformOrigin: 'top center' }}
+                css={{ margin: 'auto', transform: 'scale(1.5)', transformOrigin: 'top center', marginBottom: '15em' }}
                 statistics={levelStatistics}
                 selectedLevel={level}
             />

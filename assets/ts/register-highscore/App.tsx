@@ -24,7 +24,14 @@ function main() {
 
     const rank = root.dataset.rank ? parseInt(root.dataset.rank, 10) : undefined;
 
-    render(<Scores level={level} highlightRank={rank} css={{ margin: 'auto' }} />, root);
+    render(
+        <Scores
+            level={level}
+            highlightRank={rank}
+            css={{ marginLeft: 'auto', marginRight: 'auto', marginBottom: '3em' }}
+        />,
+        root
+    );
 }
 
 main();
