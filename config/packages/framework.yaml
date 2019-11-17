@@ -11,6 +11,7 @@ framework:
     cookie_samesite: strict
     name: SOKOBOO_SESSID
     cookie_lifetime: 31536000
+    gc_maxlifetime: 31536000
 
 
   #esi: true
