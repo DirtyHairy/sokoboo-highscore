@@ -17,12 +17,13 @@ const Container = styled.div({
     alignItems: 'center'
 });
 
-const Message = styled.div({ fontFamily: 'ibmconv', textAlign: 'center' });
+const Message = styled.div({ ftextAlign: 'center' });
 
 const Title: FunctionComponent<{ level: number }> = ({ level }) => (
-    <div css={{ fontFamily: 'ibmconv', textAlign: 'center', marginBottom: '2em' }}>
-        ----====≡≡≡≡ LEVEL <div css={{ display: 'inline-block', width: '2em', textAlign: 'right' }}>{level}</div>{' '}
-        ≡≡≡≡====----
+    <div css={{ textAlign: 'center', marginBottom: '2em' }}>
+        <span css={{ fontFamily: 'ibmconv' }}>----====≡≡≡≡</span> LEVEL{' '}
+        <div css={{ display: 'inline-block', width: '2em', textAlign: 'right' }}>{level}</div>{' '}
+        <span css={{ fontFamily: 'ibmconv' }}>≡≡≡≡====----</span>
     </div>
 );
 
@@ -51,7 +52,6 @@ const Scores: FunctionComponent<Props> = ({ level, highlightRank: highlightScore
             <Title level={level} />
             <table
                 css={{
-                    fontFamily: 'ibmconv',
                     textAlign: 'left',
                     tableLayout: 'fixed',
                     width: '58em'

@@ -29,7 +29,6 @@ const Layout = styled.div({
 const Message: FunctionComponent<{ message: string }> = ({ message }) => (
     <span
         css={{
-            fontFamily: 'ibmconv',
             display: 'inline-block',
             marginTop: '6em'
         }}

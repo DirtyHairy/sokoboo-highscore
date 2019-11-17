@@ -2,7 +2,6 @@
   width: 30em;
   margin: auto;
   margin-top: 6em;
-  font-family: ibmconv;
   line-height: 3em;
 
   label {
@@ -41,8 +40,8 @@
     box-sizing: border-box;
 
     border: none;
+    font-family: inherit;
     color: white;
-    font-family: ibmconv;
     font-size: inherit;
     padding: 0.5em;
     background: #444;
@@ -60,7 +59,6 @@
 
 .status-message {
   text-align: center;
-  font-family: ibmconv;
   margin: 3em;
   background: #222;
   line-height: 2em;

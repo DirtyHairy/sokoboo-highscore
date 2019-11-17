@@ -44,7 +44,7 @@ const Matrix: FunctionComponent<Props> = ({ statistics, selectedLevel, className
     const maxPlayed = Math.max(...statistics.map(x => x.playedCount));
 
     return (
-        <table css={{ borderCollapse: 'collapse' }} className={className}>
+        <table css={{ borderCollapse: 'collapse', fontFamily: 'vga8' }} className={className}>
             <thead>
                 <tr>
                     <CellNW />
