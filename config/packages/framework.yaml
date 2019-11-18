@@ -8,7 +8,7 @@ framework:
   session:
     handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
     cookie_secure: auto
-    cookie_samesite: strict
+    cookie_samesite: lax
     name: SOKOBOO_SESSID
     cookie_lifetime: 31536000
     gc_maxlifetime: 31536000

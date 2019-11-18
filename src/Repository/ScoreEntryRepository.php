@@ -108,20 +108,24 @@ class ScoreEntryRepository extends ServiceEntityRepository
      */
     public function getRank(ScoreEntry $scoreEntry): int
     {
-        $result = $this->entityManager->createQueryBuilder()
-            ->select("COUNT(se)")
-            ->from("App:ScoreEntry", "se")
-            ->where("se.moves <= :moves")
-            ->andWhere("se.seconds <= :seconds")
-            ->andWhere("se.timestamp <= :timestamp")
-            ->andWhere("se.level = :level")
+        $result = $this->entityManager
+            ->createQuery(
+                "
+                    SELECT COUNT(se) FROM App:ScoreEntry se WHERE
+                        (
+                                (se.moves < :moves)
+                            OR  (se.moves = :moves AND se.seconds < :seconds)
+                            OR  (se.moves = :moves AND se.seconds = :seconds AND se.timestamp <= :timestamp)
+                        )
+                        AND se.level = :level
+               "
+            )
             ->setParameters([
                 "moves" => $scoreEntry->getMoves(),
                 "seconds" => $scoreEntry->getSeconds(),
                 "timestamp" => $scoreEntry->getTimestamp(),
                 "level" => $scoreEntry->getLevel()
             ])
-            ->getQuery()
             ->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
 
         return intval($result);
