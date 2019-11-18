@@ -8,47 +8,6 @@ import styled from '@emotion/styled';
 
 import Highscore, { formatSeconds } from '../model/Highscore';
 
-const Container = styled.div({
-    height: '30em',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'center'
-});
-
-const ChangeLevel = styled.a({
-    fontFamily: 'ibmconv',
-    color: 'white',
-    textDecoration: 'none',
-    '&:visited': { color: 'white', textDecoration: 'none' }
-});
-
-const Message = styled.div({ textAlign: 'center' });
-
-const Title: FunctionComponent<{ level: number; onNextLevel?: () => void; onPreviousLevel?: () => void }> = ({
-    level,
-    onNextLevel,
-    onPreviousLevel
-}) => (
-    <div css={{ textAlign: 'center', marginBottom: '1em', lineHeight: '2em' }}>
-        Leader Board <br />
-        <ChangeLevel
-            href={onPreviousLevel ? '#' : undefined}
-            onClick={onPreviousLevel ? e => (e.preventDefault(), onPreviousLevel()) : undefined}
-        >
-            ----====≡≡≡≡
-        </ChangeLevel>{' '}
-        LEVEL <div css={{ display: 'inline-block', width: '2em', textAlign: 'right' }}>{level}</div>{' '}
-        <ChangeLevel
-            href={onNextLevel ? '#' : undefined}
-            onClick={onNextLevel ? e => (e.preventDefault(), onNextLevel()) : undefined}
-            css={{ fontFamily: 'ibmconv' }}
-        >
-            ≡≡≡≡====----
-        </ChangeLevel>
-    </div>
-);
-
 export interface Props {
     level: number;
     highlightRank?: number;
@@ -57,27 +16,57 @@ export interface Props {
     onNextLevel?: () => void;
 }
 
+const Container = styled.div({ height: '31em' });
+
+const NavLink: FunctionComponent<{ handler?: () => void }> = ({ handler, children }) => (
+    <a
+        css={{
+            fontFamily: 'ibmconv',
+            color: 'white',
+            textDecoration: 'none',
+            '&:visited': { color: 'white', textDecoration: 'none' },
+            ...(handler ? { '&:hover': { color: 'red' } } : {})
+        }}
+        href={handler ? '#' : undefined}
+        onClick={handler ? e => (e.preventDefault(), handler()) : undefined}
+    >
+        {children}
+    </a>
+);
+
+const Title: FunctionComponent<{ level: number; onNextLevel?: () => void; onPreviousLevel?: () => void }> = props => (
+    <div css={{ textAlign: 'center', marginBottom: '1em', lineHeight: '2em' }}>
+        Leader Board <br />
+        <NavLink handler={props.onPreviousLevel}>----====≡≡≡≡</NavLink> LEVEL{' '}
+        <div css={{ display: 'inline-block', width: '2em', textAlign: 'right' }}>{props.level}</div>{' '}
+        <NavLink handler={props.onNextLevel}>≡≡≡≡====----</NavLink>
+    </div>
+);
+
 const Scores: FunctionComponent<Props> = props => {
-    const [{ data: scores, loading: scoresLoading, error: loadError }] = useAxios<Array<Highscore>>(
+    const [{ data: scores, loading, error }] = useAxios<Array<Highscore>>(
         `/api/level/${props.level === undefined ? 0 : props.level}/highscore`
     );
 
-    if (scoresLoading || loadError) {
+    const title = <Title level={props.level} onPreviousLevel={props.onPreviousLevel} onNextLevel={props.onNextLevel} />;
+
+    if (loading || error) {
         return (
             <Container className={props.className}>
-                <Title level={props.level} onPreviousLevel={props.onPreviousLevel} onNextLevel={props.onNextLevel} />
-                <Message>{scoresLoading ? 'Loading...' : 'Network error'}</Message>
+                {title}
+                <div css={{ textAlign: 'center', marginTop: '2em' }}>{loading ? 'Loading...' : 'Network error'}</div>
             </Container>
         );
     }
 
     return (
         <Container className={props.className}>
-            <Title level={props.level} onPreviousLevel={props.onPreviousLevel} onNextLevel={props.onNextLevel} />
+            {title}
             <table
                 css={{
                     textAlign: 'center',
-                    tableLayout: 'fixed'
+                    tableLayout: 'fixed',
+                    margin: 'auto'
                 }}
             >
                 <thead>
@@ -99,8 +88,8 @@ const Scores: FunctionComponent<Props> = props => {
 
                             return (
                                 <tr key={i} css={props.highlightRank === i + 1 ? { color: 'red' } : undefined}>
-                                    <td css={{ textAlign: 'right', color: 'red', width: '3em' }}>{i + 1}</td>
-                                    <td css={{ width: '21em' }}>{h ? h.nick : '.'.repeat(20)}</td>
+                                    <td css={{ textAlign: 'right', color: 'red' }}>{i + 1}</td>
+                                    <td>{h ? h.nick : '.'.repeat(20)}</td>
                                     <td>{h ? h.moves : '.'.repeat(7)}</td>
                                     <td>{h ? formatSeconds(h.seconds) : '.'.repeat(9)}</td>
                                 </tr>
