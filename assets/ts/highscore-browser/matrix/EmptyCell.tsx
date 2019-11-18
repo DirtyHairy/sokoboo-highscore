@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
-import { BORDER, IS_FIREFOX, WIDE } from './definitions';
+import { IS_FIREFOX } from '../../util/sniffing';
+import { BORDER, WIDE } from './definitions';
 
 const EmptyCell = styled.td({
     height: WIDE,

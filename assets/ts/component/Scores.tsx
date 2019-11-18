@@ -7,6 +7,7 @@ import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 
 import Highscore, { formatSeconds } from '../model/Highscore';
+import { NO_HOVER } from '../util/sniffing';
 
 export interface Props {
     level: number;
@@ -25,7 +26,7 @@ const NavLink: FunctionComponent<{ handler?: () => void }> = ({ handler, childre
             color: 'white',
             textDecoration: 'none',
             '&:visited': { color: 'white', textDecoration: 'none' },
-            ...(handler ? { '&:hover': { color: 'red' } } : {})
+            ...(handler && !NO_HOVER ? { '&:hover': { color: 'red' } } : {})
         }}
         href={handler ? '#' : undefined}
         onClick={handler ? e => (e.preventDefault(), handler()) : undefined}

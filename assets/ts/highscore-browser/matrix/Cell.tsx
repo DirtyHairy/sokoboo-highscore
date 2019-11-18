@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 import { jsx } from '@emotion/core';
 
 import LevelStatistics from '../../model/LevelStatistics';
-import { BORDER, IS_FIREFOX, WIDE } from './definitions';
+import { IS_FIREFOX, NO_HOVER } from '../../util/sniffing';
+import { BORDER, WIDE } from './definitions';
 import Tooltip from './Tooltip';
 
 export interface Props {
@@ -39,17 +40,21 @@ const Cell: FunctionComponent<Props> = props => (
             backgroundClip: IS_FIREFOX ? 'padding-box' : 'border-box',
             padding: 0,
 
-            '&:hover': {
-                color: props.selected ? 'white' : 'black'
-            },
-
             '& .tooltip': {
                 display: 'none'
             },
 
-            '&:hover .tooltip': {
-                display: 'initial'
-            }
+            ...(NO_HOVER
+                ? {}
+                : {
+                      '&:hover': {
+                          color: props.selected ? 'white' : 'black'
+                      },
+
+                      '&:hover .tooltip': {
+                          display: 'initial'
+                      }
+                  })
         }}
         style={
             props.selected
@@ -75,7 +80,7 @@ const Cell: FunctionComponent<Props> = props => (
         >
             {props.level}
         </Link>
-        <Tooltip level={props.level} statistics={props.statistics} />
+        {NO_HOVER || <Tooltip level={props.level} statistics={props.statistics} />}
     </td>
 );
 
