@@ -104,9 +104,6 @@ class ScoreService
             $statistics[$i] = new LevelStatistics(0);
         }
 
-        /** @var int $rank */
-        $rank = 1;
-
         foreach ($this->scoreEntryRepository->getStatistics() as $row) {
             $statistics[$row["level"]]
                 ->setPlayedCount(intval($row["count"]))
@@ -117,7 +114,7 @@ class ScoreService
                         ->setSeconds(intval($row["seconds"]))
                         ->setTimestamp(intval($row["timestamp"]))
                         ->setLevel(intval($row["level"]))
-                        ->setRank($rank++)
+                        ->setRank(1)
                 );
         }
 
@@ -131,7 +128,17 @@ class ScoreService
      */
     public function highScoresForLevel(int $level): array
     {
-        return array_map('App\Model\Highscore::fromScoreEntry', $this->scoreEntryRepository->getSortedScoresByLevel($level));
+        /** @var Highscore[] $highscores */
+        $highscores = array_map('App\Model\Highscore::fromScoreEntry', $this->scoreEntryRepository->getSortedScoresByLevel($level));
+
+        /** @var int $rank */
+        $rank = 1;
+
+        foreach ($highscores as $highscore) {
+            $highscore->setRank($rank++);
+        }
+
+        return $highscores;
     }
 
     /**
