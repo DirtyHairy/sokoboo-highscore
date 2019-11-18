@@ -72,7 +72,7 @@ class ScoreService
             ->setLevel($score->getLevel())
             ->setMoves($score->getMoves())
             ->setSeconds($score->getSeconds())
-            ->setNick($nick)
+            ->setNick(strtolower($nick))
             ->setCode($code)
             ->setTimestamp(time())
             ->setSession($session)

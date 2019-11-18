@@ -87,7 +87,7 @@ class GenerateFakeScores extends Command
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         /** @var int $count */
-        intval($count = $input->getArgument(self::ARGUMENT_COUNT));
+        $count = intval($input->getArgument(self::ARGUMENT_COUNT));
 
         /** @var  $progress */
         $progress = new ProgressBar($output);
