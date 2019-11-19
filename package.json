@@ -32,5 +32,7 @@
         "watch": "encore dev --watch",
         "build": "encore production --progress"
     },
-    "dependencies": {}
+    "dependencies": {
+        "axios-cache-adapter": "^2.5.0"
+    }
 }
