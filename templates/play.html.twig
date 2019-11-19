@@ -1,5 +1,11 @@
+{% import "macros.html.twig" as macros %}
+
 {% extends "base.html.twig" %}
 
 {% block content %}
     <div style="text-align: center">Play in Stellerator</div>
+{% endblock %}
+
+{% block scriptextra %}
+    {{ macros.scriptextra("play") }}
 {% endblock %}

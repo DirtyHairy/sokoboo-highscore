@@ -1,5 +1,11 @@
+{% import "macros.html.twig" as macros %}
+
 {% extends "base.html.twig" %}
 
 {% block content %}
     <div class="http-error-message">404 - NOT FOUND</div>
+{% endblock %}
+
+{% block scriptextra %}
+    {{ macros.scriptextra("error") }}
 {% endblock %}

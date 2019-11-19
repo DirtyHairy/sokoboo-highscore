@@ -12,6 +12,8 @@ Encore
     .setPublicPath('/build')
     .addEntry('highscore-browser', './assets/ts/highscore-browser/main.tsx')
     .addEntry('register-highscore', './assets/ts/register-highscore/main.ts')
+    .addEntry('play', './assets/ts/play/main.ts')
+    .addEntry('error', './assets/ts/error/main.ts')
     .addEntry('global', './assets/ts/global/main.ts')
     // .splitEntryChunks()
     .disableSingleRuntimeChunk()

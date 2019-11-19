@@ -1,3 +1,5 @@
+import '../stripes/stripes';
+
 import { configure as configureAxios } from 'axios-hooks';
 import LRUCache from 'lru-cache';
 import React, { FunctionComponent } from 'react';

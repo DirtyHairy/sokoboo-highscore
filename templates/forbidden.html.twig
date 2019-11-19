@@ -1,5 +1,11 @@
+{% import "macros.html.twig" as macros %}
+
 {% extends "base.html.twig" %}
 
 {% block content %}
     <div class="http-error-message">403 - FORBIDDEN</div>
+{% endblock %}
+
+{% block scriptextra %}
+    {{ macros.scriptextra("error") }}
 {% endblock %}
