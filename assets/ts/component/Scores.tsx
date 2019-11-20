@@ -72,10 +72,10 @@ const Scores: FunctionComponent<Props> = props => {
             >
                 <thead>
                     <tr css={{ color: 'red' }}>
-                        <td css={{ width: '2em', paddingRight: '1em' }}></td>
-                        <td css={{ width: '21em', paddingLeft: '1em', paddingRight: '1em' }}>Name</td>
-                        <td css={{ width: '7em', paddingLeft: '1em', paddingRight: '1em' }}>Moves</td>
-                        <td css={{ width: '9em', paddingLeft: '1em' }}>Time</td>
+                        <td css={{ width: '2em', padding: '0 1em' }}></td>
+                        <td css={{ width: '21em', padding: '0 1em' }}>Name</td>
+                        <td css={{ width: '7em', paddingLeft: '0 1em' }}>Moves</td>
+                        <td css={{ width: '9em', padding: '0 1em' }}>Time</td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
@@ -90,9 +90,9 @@ const Scores: FunctionComponent<Props> = props => {
                             return (
                                 <tr key={i} css={props.highlightRank === i + 1 ? { color: 'red' } : undefined}>
                                     <td css={{ textAlign: 'right', color: 'red' }}>{i + 1}</td>
-                                    <td>{h ? h.nick : '.'.repeat(20)}</td>
-                                    <td>{h ? h.moves : '.'.repeat(7)}</td>
-                                    <td>{h ? formatSeconds(h.seconds) : '.'.repeat(9)}</td>
+                                    <td>{h ? h.nick : '---'}</td>
+                                    <td>{h ? h.moves : '---'}</td>
+                                    <td>{h ? formatSeconds(h.seconds) : '---'}</td>
                                 </tr>
                             );
                         })}
