@@ -1,7 +1,7 @@
 import { NTSC } from './palette';
 
 const LINE_HEIGHT = 3;
-const CANVAS_WIDTH = 4;
+const CANVAS_WIDTH = 2;
 
 export function applyStripes() {
     const canvas = document.createElement('canvas');
@@ -21,12 +21,10 @@ export function applyStripes() {
     ctx.shadowColor = color;
     ctx.shadowOffsetY = LINE_HEIGHT;
 
-    ctx.fillRect(0, LINE_HEIGHT, 4, LINE_HEIGHT);
+    ctx.fillRect(0, LINE_HEIGHT, CANVAS_WIDTH, LINE_HEIGHT);
 
     const style = document.documentElement.style;
 
     style.backgroundImage = `url(${canvas.toDataURL()})`;
     style.backgroundRepeat = 'repeat';
 }
-
-applyStripes();
