@@ -30,7 +30,4 @@ Encore
     .enableSassLoader()
     .enableTypeScriptLoader();
 
-// uncomment if you use API Platform Admin (composer req api-admin)
-//.enableReactPreset()
-
 module.exports = Encore.getWebpackConfig();

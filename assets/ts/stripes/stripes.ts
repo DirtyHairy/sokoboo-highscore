@@ -10,23 +10,22 @@ function applyStripes() {
         return;
     }
 
+    ctx.globalAlpha = 0.15;
+
     for (let i = 0; i < 800; i += 4) {
         ctx.beginPath();
         ctx.rect!(0, i, 4, 2);
-        ctx.globalAlpha = 0.15;
 
         const color = NTSC[(Math.floor(Math.random() * 0x10) << 3) | 0x1];
-        console.log(color);
-        ctx.strokeStyle = color;
-        ctx.fillStyle = color;
+        ctx.strokeStyle = ctx.fillStyle = color;
 
         ctx.stroke();
         ctx.fill();
     }
 
-    const stripes = canvas.toDataURL();
     const style = document.documentElement.style;
-    style.backgroundImage = `url(${stripes})`;
+
+    style.backgroundImage = `url(${canvas.toDataURL()})`;
     style.backgroundRepeat = 'repeat';
 }
 
