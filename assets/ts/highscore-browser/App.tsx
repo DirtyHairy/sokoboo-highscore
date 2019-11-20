@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 
 import { jsx } from '@emotion/core';
 
+import { applyStripes } from '../stripes/stripes';
 import Level from './Level';
 import Matrix from './matrix/Matrix';
 
@@ -14,6 +15,8 @@ export interface Props {
 
 const App: FunctionComponent<Props> = ({ level }) => {
     const history = useHistory();
+
+    useEffect(applyStripes, [level]);
 
     const linkOverrides = useMemo(() => {
         const handler = (e: MouseEvent) => {

@@ -1,27 +1,27 @@
 import { NTSC } from './palette';
 
-function applyStripes() {
+const LINE_HEIGHT = 3;
+const CANVAS_WIDTH = 4;
+
+export function applyStripes() {
     const canvas = document.createElement('canvas');
-    canvas.width = 4;
-    canvas.height = 512;
+    canvas.width = CANVAS_WIDTH;
+    canvas.height = 3 * LINE_HEIGHT;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) {
         return;
     }
 
-    ctx.globalAlpha = 0.15;
+    const color = NTSC[(Math.floor(Math.random() * 0x10) << 3) | 0x2];
 
-    for (let i = 0; i < 800; i += 4) {
-        ctx.beginPath();
-        ctx.rect!(0, i, 4, 2);
+    ctx.strokeStyle = ctx.fillStyle = color;
+    ctx.globalAlpha = 0.35;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = color;
+    ctx.shadowOffsetY = LINE_HEIGHT;
 
-        const color = NTSC[(Math.floor(Math.random() * 0x10) << 3) | 0x1];
-        ctx.strokeStyle = ctx.fillStyle = color;
-
-        ctx.stroke();
-        ctx.fill();
-    }
+    ctx.fillRect(0, LINE_HEIGHT, 4, LINE_HEIGHT);
 
     const style = document.documentElement.style;
 
