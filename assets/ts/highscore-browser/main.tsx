@@ -1,4 +1,6 @@
 import '../stripes/stripes';
+import 'core-js/es/symbol';
+import 'core-js/es/map';
 
 import { configure as configureAxios } from 'axios-hooks';
 import LRUCache from 'lru-cache';
