@@ -37,7 +37,6 @@ const Cell: FunctionComponent<Props> = props => (
             textAlign: 'center',
             color: props.selected ? 'white' : 'rgba(50, 50, 50, 0.5)',
             position: 'relative',
-            backgroundClip: 'padding-box',
             padding: 0,
 
             '& .tooltip': {
