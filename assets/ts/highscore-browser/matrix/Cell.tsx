@@ -78,7 +78,7 @@ const Cell: FunctionComponent<Props> = props => (
                 textDecoration: 'none'
             }}
         >
-            {props.level}
+            {String(props.level).padStart(2, '0')}
         </Link>
         {NO_HOVER || <Tooltip level={props.level} statistics={props.statistics} />}
     </td>

@@ -1,2 +1,2 @@
-export const WIDE = '2em';
-export const BORDER = '1.5px solid white';
+export const WIDE = '3.5em';
+export const BORDER = '2px solid white';

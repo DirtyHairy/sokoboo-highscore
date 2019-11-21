@@ -46,7 +46,7 @@ const Matrix: FunctionComponent<Props> = ({ className }) => {
 
     return (
         <Container>
-            <table css={{ borderCollapse: 'collapse', fontFamily: 'vga8', fontSize: '1.5em' }} className={className}>
+            <table css={{ borderCollapse: 'collapse' }} className={className}>
                 <tbody>
                     {new Array(Math.ceil(LEVEL_COUNT / 10)).fill(1).map((_, i) => (
                         <tr key={i}>

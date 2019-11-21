@@ -4,6 +4,7 @@ html {
   font-family: arcade;
   line-height: 16px;
   font-size: 16px;
+  touch-action: manipulation;
 }
 
 #sokoboo-logo {
@@ -26,15 +27,15 @@ html {
 }
 
 .player-icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: bottom;
+  width: 1.25em;
+  height: 1.25em;
+  vertical-align: text-bottom;
 }
 
 .clock-icon {
-  width: 11px;
-  height: 11px;
-  vertical-align: center;
+  width: 1em;
+  height: 1em;
+  vertical-align: text-bottom;
 }
 
 #navigation {

@@ -19,7 +19,7 @@ const Tooltip: FunctionComponent<Props> = props => (
     <div
         css={{
             position: 'absolute',
-            width: '7em',
+            width: '11em',
             backgroundColor: 'black',
             color: 'white',
             boxShadow: '0 0 32px 3px #333',
@@ -30,16 +30,20 @@ const Tooltip: FunctionComponent<Props> = props => (
             transform: TRANSFORM,
             msTransform: TRANSFORM,
             pointerEvents: 'none',
-            textAlign: 'center'
+            textAlign: 'center',
+            lineHeight: '1.75em'
         }}
         className="tooltip"
     >
-        <div css={{ marginBottom: '0.5em' }}>☰ {props.level}</div>
-        <div css={{ marginBottom: '0.5em' }}>
+        <div>
+            <span css={{ fontFamily: 'ibmconv' }}>≡</span> {String(props.level).padStart(2, '0')}
+        </div>
+        <div>
             <i className="player-icon" /> {props.statistics.playedCount}
         </div>
-        <div css={{ marginBottom: '0.5em' }}>
-            # {props.statistics.bestScore ? props.statistics.bestScore.moves : '-'}
+        <div>
+            <span css={{ fontFamily: 'ibmconv' }}>#</span>{' '}
+            {props.statistics.bestScore ? props.statistics.bestScore.moves : '-'}
         </div>
         <div>
             <i className="clock-icon" />{' '}
