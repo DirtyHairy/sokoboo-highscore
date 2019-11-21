@@ -6756,9 +6756,9 @@ xtend@^4.0.0, xtend@~4.0.1:
   resolved "https://registry.yarnpkg.com/y18n/-/y18n-4.0.0.tgz#95ef94f85ecc81d007c264e190a120f0a3c8566b"
   integrity sha512-r9S/ZyXu/Xu9q1tYlpsLIsa3EeLXXk0VwlxqTcFRfg9EhMW+17kbt9G0NrgCmhGb5vT2hyhJZLfDGx+7+5Uj/w==
 
-yallist@^3.0.0, yallist@^3.0.2, yallist@^3.0.3, yallist@dirtyhairy/yallist#v4.0.0-cs:
+yallist@^3.0.0, yallist@^3.0.2, yallist@^3.0.3, yallist@dirtyhairy/yallist#v4.0.0.1-cs:
   version "4.0.0"
-  resolved "https://codeload.github.com/dirtyhairy/yallist/tar.gz/435bcca71b1e4ddc430012ea116dcfbb94806edf"
+  resolved "https://codeload.github.com/dirtyhairy/yallist/tar.gz/b82d30913e537bacadb686fa54326a1ea8b55d2c"
 
 yaml@^1.7.2:
   version "1.7.2"
