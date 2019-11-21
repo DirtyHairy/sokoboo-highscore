@@ -8,6 +8,7 @@ import styled from '@emotion/styled';
 
 import LevelStatistics from '../../model/LevelStatistics';
 import Cell from './Cell';
+import { BORDER } from './definitions';
 import EmptyCell from './EmptyCell';
 
 export interface Props {
@@ -46,7 +47,7 @@ const Matrix: FunctionComponent<Props> = ({ className }) => {
 
     return (
         <Container>
-            <table css={{ borderCollapse: 'collapse' }} className={className}>
+            <table css={{ borderSpacing: 0, border: BORDER }} className={className}>
                 <tbody>
                     {new Array(Math.ceil(LEVEL_COUNT / 10)).fill(1).map((_, i) => (
                         <tr key={i}>

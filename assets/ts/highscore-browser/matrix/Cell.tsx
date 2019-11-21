@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { jsx } from '@emotion/core';
 
 import LevelStatistics from '../../model/LevelStatistics';
-import { IS_FIREFOX, NO_HOVER } from '../../util/sniffing';
+import { NO_HOVER } from '../../util/sniffing';
 import { BORDER, WIDE } from './definitions';
 import Tooltip from './Tooltip';
 
@@ -37,7 +37,7 @@ const Cell: FunctionComponent<Props> = props => (
             textAlign: 'center',
             color: props.selected ? 'white' : 'rgba(50, 50, 50, 0.5)',
             position: 'relative',
-            backgroundClip: IS_FIREFOX ? 'padding-box' : 'border-box',
+            backgroundClip: 'padding-box',
             padding: 0,
 
             '& .tooltip': {
