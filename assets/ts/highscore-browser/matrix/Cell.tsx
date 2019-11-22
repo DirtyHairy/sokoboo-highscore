@@ -51,7 +51,7 @@ const Cell: FunctionComponent<Props> = props => (
                       },
 
                       '&:hover .tooltip': {
-                          display: 'initial'
+                          display: 'block'
                       }
                   })
         }}
