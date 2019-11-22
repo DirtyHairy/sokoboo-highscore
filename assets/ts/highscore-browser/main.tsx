@@ -1,5 +1,5 @@
 import '../stripes/stripes';
-import 'core-js';
+import 'core-js/es';
 
 import { configure as configureAxios } from 'axios-hooks';
 import LRUCache from 'lru-cache';

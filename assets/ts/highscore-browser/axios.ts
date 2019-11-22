@@ -16,8 +16,8 @@ export function setupAxios(): AxiosInstance {
 
             const { cancelToken, ..._config } = config;
 
-            axiosCache.adapter(_config).then(
-                result => resolve(result),
+            axiosCache.adapter(_config as any).then(
+                result => resolve(result as any),
                 error => reject(error)
             );
         });

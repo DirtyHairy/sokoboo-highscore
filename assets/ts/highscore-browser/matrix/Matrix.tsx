@@ -25,6 +25,8 @@ const Message = styled.div({
 const LEVEL_COUNT = 100;
 
 const Matrix: FunctionComponent<Props> = ({ className }) => {
+    console.log('render matrix');
+
     const [{ data: statistics, loading: loading, error: error }] = useAxios<Array<LevelStatistics>>('/api/statistics');
 
     if (loading) {
@@ -36,6 +38,8 @@ const Matrix: FunctionComponent<Props> = ({ className }) => {
     }
 
     if (error) {
+        console.log(error);
+
         return (
             <Container>
                 <Message>Network error</Message>
