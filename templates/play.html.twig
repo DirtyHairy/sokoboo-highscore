@@ -3,9 +3,13 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-    <div style="text-align: center">Play in Stellerator</div>
+    <canvas id="emulation-canvas" width="0" height="0"></canvas>
 {% endblock %}
 
 {% block scriptextra %}
     {{ macros.scriptextra("play") }}
+{% endblock %}
+
+{% block stylesextra %}
+    {{ macros.stylesextra("play") }}
 {% endblock %}

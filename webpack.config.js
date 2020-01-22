@@ -25,7 +25,8 @@ Encore
     // enables @babel/preset-env polyfills
     .configureBabel(() => {}, {
         useBuiltIns: 'entry',
-        corejs: 3
+        corejs: 3,
+        exclude: /6502.ts/
     })
     .enableSassLoader()
     .enableTypeScriptLoader();

@@ -55,6 +55,7 @@ echo "BUILD_ID=$build_id" >> .env
 "$COMPOSER" dump-env prod
 
 "$YARN" install
+"$YARN" link 6502.ts
 "$YARN" build
 
 cd ..
