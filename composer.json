@@ -20,7 +20,8 @@
         "symfony/validator": "4.4.*",
         "symfony/webpack-encore-bundle": "^1.6",
         "symfony/yaml": "4.4.*",
-        "twig/extensions": "^1.5"
+        "twig/extensions": "^1.5",
+        "ocramius/proxy-manager": "<2.3"
     },
     "require-dev": {
         "symfony/maker-bundle": "^1.14",
