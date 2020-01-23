@@ -10,12 +10,30 @@ const stelleratorWorker: string = require('!file-loader!6502.ts/dist/worker/stel
 async function main(): Promise<void> {
     const stellerator = new Stellerator(
         document.getElementById('emulation-canvas') as HTMLCanvasElement,
-        stelleratorWorker
+        stelleratorWorker,
+        {
+            smoothScaling: false,
+            simulatePov: true,
+            volume: 0.1
+        }
     );
 
-    stellerator.enableSmoothScaling(false).enablePovSimulation(true);
+    stellerator.dataTapMessage.addHandler(data => {
+        let base = 1;
+        let code = 0;
 
-    await stellerator.start(sokobooRom, Stellerator.TvMode.ntsc);
+        for (let i = data.length - 1; i >= 0; i--) {
+            code += data[i] * base;
+            base *= 256;
+        }
+
+        console.log(`received code ${code}`);
+    });
+
+    await stellerator.start(sokobooRom, Stellerator.TvMode.ntsc, {
+        dataTap: true,
+        cpuAccuracy: Stellerator.CpuAccuracy.instruction
+    });
 
     stellerator
         .getControlPanel()
